@@ -1,6 +1,6 @@
 {"version":3,
  "file":
- "/Users/whitec/other/test-cljs-web/resources/public/js/test_cljs_web/core.js",
+ "/Users/callum/projects/closso/test-cljs-web/resources/public/js/test_cljs_web/core.js",
  "sources":["core.cljs"],
  "lineCount":6,
  "mappings":";AAAA;;AAEA,eAAA,fAAQA",
