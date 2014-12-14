@@ -10,6 +10,11 @@ You will need [Leiningen][1] 2.0 or above installed.
 
 ## Running
 
+To compile the cljs, run:
+
+    lein cljsbuild auto
+    lein cljsbuild auto dev?
+
 To start a web server for the application, run:
 
     lein ring server
