@@ -1,8 +1,0 @@
-{"version":3,
- "file":
- "/home/callum/projects/closso/test-luminus-mongo/resources/public/js/out/test_luminus_mongo/app.js",
- "sources":["dev.cljs"],
- "lineCount":9,
- "mappings":";AAAA;;;;AAGA,AAACA;AAED,AAACC",
- "names":
- ["cljs.core/enable-console-print!", "test-luminus-mongo.core/init!"]}

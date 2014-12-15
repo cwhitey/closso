@@ -15,6 +15,10 @@ To compile the cljs, run:
     lein cljsbuild auto
     lein cljsbuild auto dev?
 
+To clean up files created by the above commands, run:
+
+    lein cljsbuild clean
+
 To start a web server for the application, run:
 
     lein ring server
