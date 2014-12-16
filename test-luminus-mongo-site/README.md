@@ -13,7 +13,7 @@ You will need [Leiningen][1] 2.0 or above installed.
 To compile the cljs, run:
 
     lein cljsbuild auto
-    lein cljsbuild auto dev?
+    lein cljsbuild auto dev (?)
 
 To clean up files created by the above commands, run:
 

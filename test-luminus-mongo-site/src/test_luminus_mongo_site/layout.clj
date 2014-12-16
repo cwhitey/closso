@@ -8,6 +8,12 @@
 
 (def template-path "templates/")
 
+(defn get-context [context request]
+  (if-let [context (:servlet-context request)]
+             (try
+               (.getContextPath context)
+               (catch IllegalArgumentException _ context))))
+
 (deftype
   RenderableTemplate
   [template params]
@@ -16,23 +22,16 @@
     [this request]
     (content-type
       (->>
-        (assoc
+        (conj
           params
-          (keyword (s/replace template #".html" "-selected"))
-          "active"
-          :dev
-          (env :dev)
-          :servlet-context
-          (if-let [context (:servlet-context request)]
-            (try
-              (.getContextPath context)
-              (catch IllegalArgumentException _ context)))
-          :user-id
-          (session/get :user-id))
+          {(keyword
+            (s/replace template #".html" "-selected")) "active"
+           :dev             (env :dev)
+           :servlet-context (get-context context request)
+           :user-id         (session/get :user-id)})
         (parser/render-file (str template-path template))
         response)
       "text/html; charset=utf-8")))
 
 (defn render [template & [params]]
   (RenderableTemplate. template params))
-
