@@ -4,8 +4,8 @@
 
 ## Prerequisites
 
-You will need [Leiningen][1] 2.0 or above installed.
-You will need [MongoDB][2] installted.
+ 1. You will need [Leiningen][1] 2.0 or above installed.
+ 2. You will need [MongoDB][2] installted.
 
 [1]: https://github.com/technomancy/leiningen
 [2]: https://www.mongodb.org/downloads
@@ -14,7 +14,7 @@ You will need [MongoDB][2] installted.
 
 To start MongoDB, run:
 
-    mongod
+    sudo mongod
 
 To compile the cljs, run:
 

@@ -2,9 +2,9 @@
   test-luminus-mongo-site
   "0.1.0-SNAPSHOT"
   :description
-  "FIXME: write description"
+  "Currently a test site"
   :url
-  "http://example.com/FIXME"
+  "http://localhost:3000/"
   :dependencies
   [[com.novemberain/monger "2.0.0"]
    [log4j
@@ -66,7 +66,8 @@
     :injections
     [(require 'pjstadig.humane-test-output)
      (pjstadig.humane-test-output/activate!)],
-    :env {:dev true}}}
+    :env {:dev true}
+    :resource-paths ["resources/"]}}
   :cljsbuild
   {:builds
    {:app
