@@ -8,11 +8,11 @@
             [ring.middleware.defaults :refer [site-defaults]]
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
-            [taoensso.timbre.appenders.rotor :as rotor]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
             [cronj.core :as cronj]
-            [test-luminus-mongo-site.routes.auth :refer [auth-routes]]))
+            [test-luminus-mongo-site.routes.auth :refer [auth-routes]]
+            [test-luminus-mongo-site.logging :as log]))
 
 (defroutes
   base-routes
@@ -23,18 +23,7 @@
   "initialisation code.
    called once when app is deployed."
   []
-  (timbre/set-config!
-    [:appenders :rotor]
-    {:min-level :info,
-     :enabled? true,
-     :async? false,
-     :max-message-per-msecs nil,
-     :fn rotor/appender-fn})
-  (timbre/set-config!
-    [:shared-appender-config :rotor]
-    {:path "test_luminus_mongo_site.log",
-     :max-size (* 512 1024),
-     :backlog 10})
+  (log/init)
   (if (env :dev) (parser/cache-off!))
   (cronj/start! session-manager/cleanup-job)
   (timbre/info

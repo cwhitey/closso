@@ -3,14 +3,16 @@
                       [test-luminus-mongo-site.util :as util]
                       [compojure.core :refer :all]
                       [noir.response :refer [edn]]
-                      [clojure.pprint :refer [pprint]]))
+                      [clojure.pprint :refer [pprint]]
+                      [taoensso.timbre :as timbre]
+                      [test-luminus-mongo-site.logging :as log]))
 
 (defn home-page []
       (layout/render
         "app.html" {:docs (util/md->html "/md/docs.md")}))
 
 (defn save-document [doc]
-      (pprint doc)
+      (timbre/info doc)
       {:status "ok"})
 
 (defroutes home-routes

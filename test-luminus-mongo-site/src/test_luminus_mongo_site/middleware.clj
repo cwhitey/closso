@@ -1,5 +1,6 @@
 (ns test-luminus-mongo-site.middleware
   (:require [taoensso.timbre :as timbre]
+            [test-luminus-mongo-site.logging :as log]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
             [selmer.middleware :refer [wrap-error-page]]

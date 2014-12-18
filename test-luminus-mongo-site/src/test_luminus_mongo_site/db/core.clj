@@ -2,11 +2,14 @@
     (:require [monger.core :as mg]
               [monger.collection :as mc]
               [monger.operators :refer :all]
-              [taoensso.timbre :as timbre]))
+              [taoensso.timbre :as timbre]
+              [test-luminus-mongo-site.logging :as log]))
 
 ;; Tries to get the Mongo URI from the environment variable
 ;; MONGOHQ_URL, otherwise default it to localhost
-(defonce db (let [uri (get (System/getenv) "MONGOHQ_URL" "mongodb://127.0.0.1/test-luminus-mongo-site")
+(defonce db (let [uri (get (System/getenv)
+                           "MONGOHQ_URL"
+                           "mongodb://127.0.0.1/test-luminus-mongo-site")
                   connection (mg/connect-via-uri uri)
                   {:keys [conn db]} connection]
               (timbre/info (str "Mongo connection: " connection))
