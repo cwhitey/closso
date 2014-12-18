@@ -31,7 +31,9 @@
                    [:beer "Beer"]
                    [:crab-juice "Crab juice"])])
 
-(defn save-doc [doc]
+(defn save-doc
+  "use Ajax to hit the /save endpoint on the backend"
+  [doc]
   (fn []
     (POST (str js/context "/save")
           {:params {:doc @doc}
@@ -79,5 +81,3 @@
   (swap! state assoc :page home)
   (reagent/render-component [navbar] (.getElementById js/document "navbar"))
   (reagent/render-component [page] (.getElementById js/document "app")))
-
-

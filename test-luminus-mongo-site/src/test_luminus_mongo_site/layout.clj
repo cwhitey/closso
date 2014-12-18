@@ -8,7 +8,7 @@
 
 (def template-path "templates/")
 
-(defn get-context [context request]
+(defn get-context [request]
   (if-let [context (:servlet-context request)]
              (try
                (.getContextPath context)
@@ -27,11 +27,14 @@
           {(keyword
             (s/replace template #".html" "-selected")) "active"
            :dev             (env :dev)
-           :servlet-context (get-context context request)
+           :servlet-context (get-context request)
            :user-id         (session/get :user-id)})
         (parser/render-file (str template-path template))
         response)
       "text/html; charset=utf-8")))
 
-(defn render [template & [params]]
+(defn render
+  "construct a response for supplied template
+   file and params."
+  [template & [params]]
   (RenderableTemplate. template params))

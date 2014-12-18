@@ -20,10 +20,8 @@
   (route/not-found "Not Found"))
 
 (defn init
-  "init will be called once when
-   app is deployed as a servlet on
-   an app server such as Tomcat
-   put any initialization code here"
+  "initialisation code.
+   called once when app is deployed."
   []
   (timbre/set-config!
     [:appenders :rotor]
@@ -40,18 +38,17 @@
   (if (env :dev) (parser/cache-off!))
   (cronj/start! session-manager/cleanup-job)
   (timbre/info
-    "
--=[ test-luminus-mongo-site started successfully"
+    "-=[Started successfully"
     (when (env :dev) "using the development profile")
     "]=-"))
 
 (defn destroy
-  "destroy will be called when your application
-   shuts down, put any clean up code here"
+  "runs when the application shuts down.
+  put any clean up code here."
   []
-  (timbre/info "test-luminus-mongo-site is shutting down...")
+  (timbre/info "Shutting down...")
   (cronj/shutdown! session-manager/cleanup-job)
-  (timbre/info "shutdown complete!"))
+  (timbre/info "Shutdown complete!"))
 
 (def session-defaults
  {:timeout (* 60 30), :timeout-response (redirect "/")})
@@ -66,12 +63,7 @@
 (def app
  (app-handler
    [auth-routes home-routes base-routes]
-   :middleware
-   (load-middleware)
-   :ring-defaults
-   (mk-defaults false)
-   :access-rules
-   []
-   :formats
-   [:json-kw :edn :transit-json]))
-
+   :middleware    (load-middleware)
+   :ring-defaults (mk-defaults false)
+   :access-rules  []
+   :formats       [:json-kw :edn :transit-json]))

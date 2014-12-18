@@ -12,7 +12,8 @@
     (handler req)))
 
 (def development-middleware
-  [wrap-error-page
+  [log-request
+   wrap-error-page
    wrap-exceptions])
 
 (def production-middleware
