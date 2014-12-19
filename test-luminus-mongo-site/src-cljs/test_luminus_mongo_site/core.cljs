@@ -55,8 +55,9 @@
                    :onClick (save-doc doc)}
           "Submit"])])))
 
+;; Navigation Bar
 (defn navbar []
-  [:div.navbar.navbar-inverse.navbar-fixed-top
+  [:div.navbar.navbar-default.navbar-fixed-top
    [:div.container
     [:div.navbar-header
      [:a.navbar-brand {:href "#/"} "test-luminus-mongo-site"]]
@@ -70,6 +71,7 @@
 (defn page []
   [(:page @state)])
 
+;; Routes
 (secretary/set-config! :prefix "#")
 
 (defroute "/" []
@@ -80,4 +82,4 @@
 (defn init! []
   (swap! state assoc :page home)
   (reagent/render-component [navbar] (.getElementById js/document "navbar"))
-  (reagent/render-component [page] (.getElementById js/document "app")))
+  (reagent/render-component [page] (.getElementById js/document "app"))) ;render this entire app (this gets compiled to "app.js" as defined in project.clj)

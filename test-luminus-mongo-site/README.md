@@ -17,7 +17,11 @@ To start MongoDB, run:
     sudo mongod
 
 To compile the cljs, run:
-
+    
+    lein cljsbuild once
+    
+Or, to auto-compile after saves, run:
+    
     lein cljsbuild auto
     lein cljsbuild auto dev (?)
 
