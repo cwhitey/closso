@@ -60,7 +60,7 @@
   [:div.navbar.navbar-default.navbar-fixed-top
    [:div.container
     [:div.navbar-header
-     [:a.navbar-brand {:href "#/"} "test-luminus-mongo-site"]]
+     [:a.navbar-brand {:href "#/"} "Closso"]]
     [:div.navbar-collapse.collapse
      [:ul.nav.navbar-nav
       [:li {:class (when (= home (:page @state)) "active")}

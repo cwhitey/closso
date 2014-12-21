@@ -9,7 +9,7 @@
 
 (defn home-page []
       (layout/render
-        "app.html" {:docs (util/md->html "/md/docs.md")}))
+        "app.html" {} #_{:docs (util/md->html "/md/docs.md")}))
 
 (defn save-document [doc]
       (timbre/info doc)
