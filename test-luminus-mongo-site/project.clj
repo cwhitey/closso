@@ -15,6 +15,7 @@
      com.sun.jdmk/jmxtools
      com.sun.jmx/jmxri]]
    [selmer "0.7.7"]
+   [hiccup "1.0.4"]
    [com.taoensso/tower "3.0.2"]
    [reagent-forms "0.2.6"]
    [prone "0.6.1"]
@@ -37,7 +38,8 @@
   [[lein-ring "0.8.13"]
    [lein-environ "1.0.0"]
    [lein-ancient "0.5.5"]
-   [lein-cljsbuild "1.0.3"]]
+   [lein-cljsbuild "1.0.3"]
+   [hiccup-bridge "1.0.1"]]
   :ring
   {:handler test-luminus-mongo-site.handler/app,
    :init test-luminus-mongo-site.handler/init,

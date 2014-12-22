@@ -1,15 +1,15 @@
 (ns test-luminus-mongo-site.routes.home
             (:require [test-luminus-mongo-site.layout :as layout]
                       [test-luminus-mongo-site.util :as util]
+                      [test-luminus-mongo-site.logging :as log]
+                      [test-luminus-mongo-site.templates.base :as base]
                       [compojure.core :refer :all]
                       [noir.response :refer [edn]]
                       [clojure.pprint :refer [pprint]]
-                      [taoensso.timbre :as timbre]
-                      [test-luminus-mongo-site.logging :as log]))
+                      [taoensso.timbre :as timbre]))
 
 (defn home-page []
-      (layout/render
-        "app.html" {} #_{:docs (util/md->html "/md/docs.md")}))
+      (layout/render base/base {} #_{:docs (util/md->html "/md/docs.md")}))
 
 (defn save-document [doc]
       (timbre/info doc)
