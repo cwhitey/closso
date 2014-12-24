@@ -1,85 +1,69 @@
 (ns test-luminus-mongo-site.core
-  (:require [reagent.core :as reagent :refer [atom]]
+  (:require [test-luminus-mongo-site.routes :as routes]
+            [test-luminus-mongo-site.session :as session]
+            [test-luminus-mongo-site.views.common :as common]
+            [test-luminus-mongo-site.views.pages :refer [pages]]
+            [test-luminus-mongo-site.views.util :as util]
+            [reagent.core :as reagent :refer [atom]]
             [secretary.core :as secretary]
-            [reagent-forms.core :refer [bind-fields]]
+            #_[reagent-forms.core :refer [bind-fields]]
             [ajax.core :refer [POST]])
   (:require-macros [secretary.core :refer [defroute]]))
 
-(def state (atom {:saved? false}))
+#_(session/global-put! :saved? false)
 
-(defn row [label & body]
-  [:div.row
-   [:div.col-md-2 [:span label]]
-   [:div.col-md-3 body]])
 
-(defn text-input [id label]
-  (row label [:input.form-control {:field :text :id id}]))
-
-(defn selection-list [label id & items]
-  (row label
-    [:div.btn-group {:field :multi-select :id id}
-      (for [[k label] items]
-        [:button.btn.btn-default {:key k} label])]))
-
-(def form
+#_(def form
   [:div
    [:div.page-header [:h1 "Reagent Form"]]
-   (text-input :first-name "First name")
-   (text-input :last-name "Last name")
-   (selection-list "Favorite drinks" :favorite-drinks
+   (util/text-input :first-name "First name")
+   (util/text-input :last-name "Last name")
+   (util/selection-list "Favorite drinks" :favorite-drinks
                    [:coffee "Coffee"]
                    [:beer "Beer"]
                    [:crab-juice "Crab juice"])])
 
-(defn save-doc
+#_(defn save-doc
   "use Ajax to hit the /save endpoint on the backend"
   [doc]
   (fn []
     (POST (str js/context "/save")
           {:params {:doc @doc}
-           :handler (fn [_] (swap! state assoc :saved? true))})))
+           :handler (fn [_] (session/global-put! :saved? true))})))
 
-(defn about []
-  [:div "this is the story of test-luminus-mongo-site... work in progress"])
-
-(defn home []
+#_(defn home []
   (let [doc (atom {})]
     (fn []
       [:div
        [bind-fields form doc
-        (fn [_ _ _] (swap! state assoc :saved? false) nil)]
-       (if (:saved? @state)
+        (fn [_ _ _] (session/global-put! :saved? false) nil)]
+       (if (session/global-state :saved?)
          [:p "Saved"]
          [:button {:type "submit"
                    :class "btn btn-default"
                    :onClick (save-doc doc)}
           "Submit"])])))
 
-;; Navigation Bar
-(defn navbar []
-  [:div.navbar.navbar-default.navbar-fixed-top
-   [:div.container
-    [:div.navbar-header
-     [:a.navbar-brand {:href "#/"} "Closso"]]
-    [:div.navbar-collapse.collapse
-     [:ul.nav.navbar-nav
-      [:li {:class (when (= home (:page @state)) "active")}
-       [:a {:on-click #(secretary/dispatch! "#/")} "Home"]]
-      [:li {:class (when (= about (:page @state)) "active")}
-       [:a {:on-click #(secretary/dispatch! "#/about")} "About"]]]]]])
 
-(defn page []
-  [(:page @state)])
+; render page
+(defn page-render []
+  [:div.container
+   [common/header]
+   [(session/global-state :current-page)]])
 
-;; Routes
-(secretary/set-config! :prefix "#")
+(defn page-component []
+  (reagent/create-class {:component-will-mount routes/app-routes
+                         :render page-render}))
 
-(defroute "/" []
-          (.log js/console "hi!")
-          (swap! state assoc :page home))
-(defroute "/about" [] (swap! state assoc :page about))
-
+;; initialize app
 (defn init! []
-  (swap! state assoc :page home)
+  (session/global-put! :current-page (pages :home-page))
+  (reagent/render-component [page-component]
+                            (.getElementById js/document "app")))
+
+
+
+#_(defn init! []
+  (session/global-put! :current-page home)
   (reagent/render-component [navbar] (.getElementById js/document "navbar"))
   (reagent/render-component [page] (.getElementById js/document "app"))) ;render this entire app (this gets compiled to "app.js" as defined in project.clj)

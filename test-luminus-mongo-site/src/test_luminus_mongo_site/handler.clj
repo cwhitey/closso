@@ -3,6 +3,11 @@
             [test-luminus-mongo-site.routes.home :refer [home-routes]]
             [test-luminus-mongo-site.middleware :refer [load-middleware]]
             [test-luminus-mongo-site.session-manager :as session-manager]
+            [test-luminus-mongo-site.routes.auth :refer [auth-routes]]
+            [test-luminus-mongo-site.logging :as log]
+            [test-luminus-mongo-site.layout :as layout]
+            [test-luminus-mongo-site.templates.base :as base]
+            [test-luminus-mongo-site.templates.notfound :as nf]
             [noir.response :refer [redirect]]
             [noir.util.middleware :refer [app-handler]]
             [ring.middleware.defaults :refer [site-defaults]]
@@ -10,14 +15,12 @@
             [taoensso.timbre :as timbre]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
-            [cronj.core :as cronj]
-            [test-luminus-mongo-site.routes.auth :refer [auth-routes]]
-            [test-luminus-mongo-site.logging :as log]))
+            [cronj.core :as cronj]))
 
-(defroutes
-  base-routes
+(defroutes base-routes
   (route/resources "/")
-  (route/not-found "Not Found"))
+  (route/not-found (layout/render base/base {:title "Not Found"
+                                             :body  (nf/notfound)})))
 
 (defn init
   "initialisation code.

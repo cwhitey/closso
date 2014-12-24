@@ -9,7 +9,8 @@
                       [taoensso.timbre :as timbre]))
 
 (defn home-page []
-      (layout/render base/base {} #_{:docs (util/md->html "/md/docs.md")}))
+  (layout/render base/base {:title "Welcome to Closso"
+                            :body  [:h1 "Home page!"]}))
 
 (defn save-document [doc]
       (timbre/info doc)
