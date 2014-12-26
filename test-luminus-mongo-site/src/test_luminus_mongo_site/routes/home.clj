@@ -8,15 +8,16 @@
                       [clojure.pprint :refer [pprint]]
                       [taoensso.timbre :as timbre]))
 
-(defn home-page []
-  (layout/render base/base {:title "Welcome to Closso"
-                            :body  [:h1 "Home page!"]}))
+
+
+(defn base []
+  (layout/render base/base {:title "Welcome to Closso"}))
 
 (defn save-document [doc]
       (timbre/info doc)
       {:status "ok"})
 
 (defroutes home-routes
-  (GET "/" [] (home-page))
+  (GET "/" [] (base))
   (POST "/save" {:keys [body-params]}
     (edn (save-document body-params))))

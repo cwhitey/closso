@@ -1,9 +1,10 @@
 (ns test-luminus-mongo-site.routes
   (:require [test-luminus-mongo-site.views.pages :refer [pages]]
             [test-luminus-mongo-site.session :as session :refer [global-put!]]
-            [secretary.core :as secretary :include-macros true :refer [defroute]]
+            [secretary.core :as secretary]
             [goog.events :as events]
             [goog.history.EventType :as EventType])
+  (:require-macros [secretary.core :refer [defroute]])
   (:import goog.History))
 
 ;; ----------
