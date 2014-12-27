@@ -1,6 +1,6 @@
-(ns test-luminus-mongo-site.views.about-page)
+(ns test-luminus-mongo-site.views.about)
 
-(defn about-page []
+(defn about []
   [:div
    [:h2 "About Page"]
    [:p "About this site..... blah blah"]])

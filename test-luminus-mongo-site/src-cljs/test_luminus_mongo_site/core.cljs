@@ -5,10 +5,8 @@
             [test-luminus-mongo-site.views.pages :refer [pages]]
             [test-luminus-mongo-site.views.util :as util]
             [reagent.core :as reagent :refer [atom]]
-            [secretary.core :as secretary]
             #_[reagent-forms.core :refer [bind-fields]]
-            [ajax.core :refer [POST]])
-  (:require-macros [secretary.core :refer [defroute]]))
+            [ajax.core :refer [POST]]))
 
 #_(session/global-put! :saved? false)
 
@@ -44,7 +42,6 @@
                    :onClick (save-doc doc)}
           "Submit"])])))
 
-
 ; render page
 (defn page-render []
   [:div.container
@@ -57,7 +54,7 @@
 
 ;; initialize app
 (defn init! []
-  (session/global-put! :current-page (pages :home-page))
+  (session/global-put! :current-page (pages :home))
   (reagent/render-component [page-component]
                             (.getElementById js/document "app")))
 

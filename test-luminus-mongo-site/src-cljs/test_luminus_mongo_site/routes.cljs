@@ -1,6 +1,6 @@
 (ns test-luminus-mongo-site.routes
   (:require [test-luminus-mongo-site.views.pages :refer [pages]]
-            [test-luminus-mongo-site.session :as session :refer [global-put!]]
+            [test-luminus-mongo-site.session :as session :refer [change-page!]]
             [secretary.core :as secretary]
             [goog.events :as events]
             [goog.history.EventType :as EventType])
@@ -24,11 +24,12 @@
   (secretary/set-config! :prefix "#")
 
   (defroute "/" []
-    (global-put! :current-page (pages :home-page))
-    (global-put! :nav "home"))
+    (change-page! (pages :home)))
 
   (defroute "/about" []
-    (global-put! :current-page (pages :about-page))
-    (global-put! :nav "about"))
+    (change-page! (pages :about)))
+
+  (defroute "*" []
+    (change-page! (pages :not-found)))
 
   (hook-browser-navigation!))

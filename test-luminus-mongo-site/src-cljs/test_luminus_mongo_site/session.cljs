@@ -15,3 +15,6 @@
 
 (defn local-put! [a k v]
   (swap! a assoc k v))
+
+(defn change-page! [page]
+  (global-put! :current-page page))
