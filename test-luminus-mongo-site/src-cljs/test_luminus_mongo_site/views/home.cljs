@@ -1,6 +1,7 @@
 (ns test-luminus-mongo-site.views.home
   (:require [test-luminus-mongo-site.views.util :as util]
             [test-luminus-mongo-site.session :as session]
+            [reagent.core :as reagent :refer [atom]]
             [reagent-forms.core :refer [bind-fields]]
             [ajax.core :refer [POST]]))
 
@@ -10,9 +11,9 @@
   [:div
    (util/text-input-group "BMI"
                           [[:person.height "Height" :numeric]
-                           [:person.weight "Weight" :numeric]])
-   (util/text-input :person.first-name "First name" :text)
-   (util/text-input :person.last-name "Last name" :text)])
+                           [:person.weight "Weight" :numeric]
+                           [:person.first-name "First name" :text]
+                           [:person.last-name "Last name" :text]])])
 
 (defn save-doc
   "use Ajax to hit the /save endpoint on the backend"

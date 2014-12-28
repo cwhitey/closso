@@ -13,7 +13,15 @@
      [:a.navbar-brand {:href "#/"} "Closso"]]
     [:div.navbar-collapse.collapse
      [:ul.nav.navbar-nav
-      [:li {:class (active? (:home pages))}
-       [:a {:href "#/"} "Home"]]
+      [:li.dropdown
+       [:a.dropdown-toggle {:href "#/"
+                            :data-toggle "dropdown"
+                            :role "button"
+                            :aria-expanded "false"}
+        "Tools" [:span.caret]]
+       [:ul.dropdown-menu {:role :menu}
+        [:li [:a {:href "#/"} "BMI"]]]]
       [:li {:class (active? (:about pages))}
-       [:a {:href "#/about"} "About"]]]]]])
+       [:a {:href "#/about"} "About"]]
+      [:li {:class (active? (:about pages))}
+       [:a {:href "#/about"} "Contact"]]]]]])

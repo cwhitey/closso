@@ -18,18 +18,18 @@
       (:body contents)]]
 
     ; scripts and styles
-    (include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")
-    ;(include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css")
-    (include-css "css/screen.css")
 
     ;; bootstrap themes
+    ;(include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")
+    ;(include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css")
     ;(include-css "css/readable.bootstrap.min.css")
-    (include-css "css/cerulean.bootstrap.min.css")
+    ;(include-css "css/cerulean.bootstrap.min.css")
+    (include-css "css/cerulean.bootstrap.css")
 
+    (include-css "css/screen.css")
 
     (include-js "//code.jquery.com/jquery-2.0.3.min.js")
     (include-js "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
-
 
     (if (:dev contents)
       (for [x  [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.js")

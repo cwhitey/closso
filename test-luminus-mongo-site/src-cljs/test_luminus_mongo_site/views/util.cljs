@@ -14,10 +14,10 @@
 
 (defn text-input-group
   [name inputs]
-  [:div.page-heading [:h2 name]]
-  (into [:div]
-        (for [[id label type] inputs]
-          (text-input id label type))))
+  [:div [:div.page-heading [:h2 name]]
+   (into [:div]
+         (for [[id label type] inputs]
+           (text-input id label type)))])
 
 (defn selection-list [label id & items]
   (input-row label
