@@ -8,15 +8,11 @@
 
 (def form
   [:div
-   #_(util/text-input-group "Reagent Test"
-                          [[:first-name "First name"]
-                           [:last-name "Last name"]])
-   (util/text-input :person.first-name "First name")
-   (util/text-input :person.last-name "Last name")
-   #_(util/selection-list "Favorite drinks" :favorite-drinks
-                          [:coffee "Coffee"]
-                          [:beer "Beer"]
-                          [:crab-juice "Crab juice"])])
+   (util/text-input-group "BMI"
+                          [[:person.height "Height" :numeric]
+                           [:person.weight "Weight" :numeric]])
+   (util/text-input :person.first-name "First name" :text)
+   (util/text-input :person.last-name "Last name" :text)])
 
 (defn save-doc
   "use Ajax to hit the /save endpoint on the backend"

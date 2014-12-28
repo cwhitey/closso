@@ -7,17 +7,17 @@
    [:div.col-md-3 body]])
 
 (defn text-input
-  [id label]
+  [id label type]
   (input-row
    [:label.control-label {:for id} label]
-   [:input.form-control {:field :text :id id}]))
+   [:input.form-control {:field type :id id}]))
 
 (defn text-input-group
   [name inputs]
-  [:h2 name]
+  [:div.page-heading [:h2 name]]
   (into [:div]
-        (for [[id label] inputs]
-          (text-input id label))))
+        (for [[id label type] inputs]
+          (text-input id label type))))
 
 (defn selection-list [label id & items]
   (input-row label
