@@ -3,7 +3,7 @@
 
 ;; ----------
 ;; State
-(def app-state (atom {}))
+(defonce app-state (atom {}))
 
 ;; ----------
 ;; Helper Functions
