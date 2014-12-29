@@ -23,5 +23,5 @@
         [:li [:a {:href "#/"} "BMI"]]]]
       [:li {:class (active? (:about pages))}
        [:a {:href "#/about"} "About"]]
-      [:li {:class (active? (:about pages))}
-       [:a {:href "#/about"} "Contact"]]]]]])
+      [:li {:class (active? (:contact pages))}
+       [:a {:href "#/contact"} "Contact"]]]]]])

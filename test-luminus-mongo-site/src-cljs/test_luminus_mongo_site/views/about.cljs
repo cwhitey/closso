@@ -2,5 +2,5 @@
 
 (defn about []
   [:div
-   [:h2 "About Page"]
+   [:h1 "About Page"]
    [:p "About this site..... blah blah"]])
