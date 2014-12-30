@@ -5,34 +5,39 @@
             [reagent-forms.core :refer [bind-fields]]
             [ajax.core :refer [POST]]))
 
-(session/global-put! :saved? false)
+(def bmi-data (atom {:height 180 :weight 80}))
 
-(def form
-  [:div
-   (util/text-input-group "BMI"
-                          [[:person.height "Height" :numeric]
-                           [:person.weight "Weight" :numeric]
-                           [:person.first-name "First name" :text]
-                           [:person.last-name "Last name" :text]])])
+(defn calc-bmi []
+  (let [{:keys [height weight bmi] :as data} @bmi-data
+        h (/ height 100)]
+    (if (nil? bmi)
+      (assoc data :bmi (/ weight (* h h)))
+      (assoc data :weight (* bmi h h)))))
 
-(defn save-doc
-  "use Ajax to hit the /save endpoint on the backend"
-  [doc]
-  (fn []
-    (.log js/console "Doc: " @doc)
-    (POST "/save"
-          {:params {:doc @doc}
-           :handler (fn [_] (session/global-put! :saved? true))})))
+(defn slider [param value min max]
+  (let [reset (case param :bmi :weight :bmi)]
+    [:input {:type "range" :value value :min min :max max
+             :style {:width "100%"}
+             :on-change #(swap! bmi-data assoc
+                                param (-> % .-target .-value)
+                                reset nil)}]))
 
 (defn bmi []
-  (let [doc (atom {})]
-    (fn []
-      [:div
-       [bind-fields form doc
-        (fn [_ _ _] (session/global-put! :saved? false) nil)]
-       (if (session/global-state :saved?)
-         [:p "Saved"]
-         [:button {:type "submit"
-                   :class "btn btn-default"
-                   :onClick (save-doc doc)}
-          "Submit"])])))
+  (let [{:keys [weight height bmi]} (calc-bmi)
+        [color diagnose] (cond
+                          (< bmi 18.5) ["orange" "underweight"]
+                          (< bmi 25) ["inherit" "normal"]
+                          (< bmi 30) ["orange" "overweight"]
+                          :else ["red" "obese"])]
+    [:div
+     [:h3 "BMI calculator"]
+     [:div
+      "Height: " (int height) "cm"
+      [slider :height height 100 220]]
+     [:div
+      "Weight: " (int weight) "kg"
+      [slider :weight weight 30 150]]
+     [:div
+      "BMI: " (int bmi) " "
+      [:span {:style {:color color}} diagnose]
+      [slider :bmi bmi 10 50]]]))

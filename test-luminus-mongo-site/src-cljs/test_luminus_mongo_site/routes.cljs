@@ -27,7 +27,10 @@
     (change-page! (pages :home)))
 
   (defroute "/tools/bmi" []
-    (change-page! (pages :bmi)))
+    (change-page! (:bmi (pages :tools))))
+
+  (defroute "/tools/rep-calculator" []
+    (change-page! (:rep-calculator (pages :tools))))
 
   (defroute "/about" []
     (change-page! (pages :about)))
