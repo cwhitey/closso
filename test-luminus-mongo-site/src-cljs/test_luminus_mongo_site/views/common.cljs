@@ -20,7 +20,7 @@
                             :aria-expanded "false"}
         "Tools" [:span.caret]]
        [:ul.dropdown-menu {:role :menu}
-        [:li [:a {:href "#/"} "BMI"]]]]
+        [:li [:a {:href "#/tools/bmi"} "BMI"]]]]
       [:li {:class (active? (:about pages))}
        [:a {:href "#/about"} "About"]]
       [:li {:class (active? (:contact pages))}

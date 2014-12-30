@@ -26,8 +26,14 @@
   (defroute "/" []
     (change-page! (pages :home)))
 
+  (defroute "/tools/bmi" []
+    (change-page! (pages :bmi)))
+
   (defroute "/about" []
     (change-page! (pages :about)))
+
+  (defroute "/contact" []
+    (change-page! (pages :contact)))
 
   (defroute "*" []
     (change-page! (pages :not-found)))
