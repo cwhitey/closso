@@ -27,4 +27,7 @@
       [:li {:class (active? (:about pages))}
        [:a {:href "#/about"} "About"]]
       [:li {:class (active? (:contact pages))}
-       [:a {:href "#/contact"} "Contact"]]]]]])
+       [:a {:href "#/contact"} "Contact"]]]
+     [:ul.nav.navbar-nav.navbar-right
+      [:li
+       [:button.btn.btn-default.navbar-btn "Sign in"]]]]]])

@@ -35,5 +35,5 @@
                  :onClick (save-doc doc)}
         "Submit"]
        (if (session/global-state :saved?)
-         [:p "Saved"]
+         [:p [:span.label.label-success "Saved"]]
          [:p ""])])))
