@@ -1,5 +1,6 @@
 (ns test-luminus-mongo-site.session
-  (:require [reagent.core :as reagent :refer [atom]]))
+  (:require [reagent.core :as reagent :refer [atom]]
+            [secretary.core :as secretary]))
 
 ;; ----------
 ;; State
@@ -16,5 +17,6 @@
 (defn local-put! [a k v]
   (swap! a assoc k v))
 
-(defn change-page! [page]
-  (global-put! :current-page page))
+(defn change-page! [info]
+  (global-put! :current-page (:page info))
+  (set! (.-title js/document) (if (:title info) (:title info) "Untitled")))

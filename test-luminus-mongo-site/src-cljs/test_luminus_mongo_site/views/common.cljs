@@ -7,27 +7,28 @@
 
 ;; Navigation Bar
 (defn header []
-  [:div.navbar.navbar-default.navbar-fixed-top
-   [:div.container
-    [:div.navbar-header
-     [:a.navbar-brand {:href "#/"} "Closso"]]
-    [:div.navbar-collapse.collapse
-     [:ul.nav.navbar-nav
-      [:li.dropdown
-       [:a.dropdown-toggle {:href "#/"
-                            :data-toggle "dropdown"
-                            :role "button"
-                            :aria-expanded "false"}
-        "Tools" [:span.caret]]
-       [:ul.dropdown-menu {:role :menu}
-        [:li {:class (active? (:bmi (:tools pages)))}
-         [:a {:href "#/tools/bmi"} "BMI"]]
-        [:li {:class (active? (:rep-calculator (:tools pages)))}
-         [:a {:href "#/tools/rep-calculator"} "Rep Calculator"]]]]
-      [:li {:class (active? (:about pages))}
-       [:a {:href "#/about"} "About"]]
-      [:li {:class (active? (:contact pages))}
-       [:a {:href "#/contact"} "Contact"]]]
-     [:ul.nav.navbar-nav.navbar-right
-      [:li
-       [:button.btn.btn-default.navbar-btn "Sign in"]]]]]])
+  (let [tools (:tools pages)]
+    [:div.navbar.navbar-default.navbar-fixed-top
+     [:div.container
+      [:div.navbar-header
+       [:a.navbar-brand {:href (:route (:home pages))} "Closso"]]
+      [:div.navbar-collapse.collapse
+       [:ul.nav.navbar-nav
+        [:li.dropdown
+         [:a.dropdown-toggle {:href (:route (:home pages))
+                              :data-toggle "dropdown"
+                              :role "button"
+                              :aria-expanded "false"}
+          "Tools" [:span.caret]]
+         [:ul.dropdown-menu {:role :menu}
+          [:li {:class (active? (:page (:bmi tools)))}
+           [:a {:href (:route (:bmi tools))} "BMI"]]
+          [:li {:class (active? (:page (:rep-calculator tools)))}
+           [:a {:href (:route (:rep-calculator tools))} "Rep Calculator"]]]]
+        [:li {:class (active? (:page (:about pages)))}
+         [:a {:href (:route (:about pages))} "About"]]
+        [:li {:class (active? (:page (:contact pages)))}
+         [:a {:href (:route (:contact pages))} "Contact"]]]
+       [:ul.nav.navbar-nav.navbar-right
+        [:li
+         [:button.btn.btn-default.navbar-btn "Sign in"]]]]]]))
