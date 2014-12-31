@@ -7,20 +7,25 @@
             [test-luminus-mongo-site.views.not-found :refer [not-found]]))
 
 (def pages {:home {:page home
-                   :route "#/"
+                   :route "/#/"
+                   :href "#/"
                    :title "Home"}
             :tools {:bmi {:page bmi
-                          :route "#/tools/bmi"
+                          :route "/#/tools/bmi"
+                          :href "#/tools/bmi"
                           :title "BMI calculator"}
                     :rep-calculator {:page rep-calculator
-                                     :route "#/tools/rep-calculator"
+                                     :route "/#/tools/rep-calculator"
+                                     :href "#/tools/rep-calculator"
                                      :title "Rep Calculator"}}
             :about {:page about
-                    :route "#/about"
+                    :route "/#/about"
+                    :href "#/about"
                     :title "About"}
             :contact {:page contact
-                      :route "#/contact"
+                      :route "/#/contact"
+                      :href "#/contact"
                       :title "Contact"}
             :not-found {:page not-found
-                        :route "#/*"
+                        :route "/#/*"
                         :title "404 Not Found"}})
