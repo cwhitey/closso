@@ -7,15 +7,15 @@
 
 (set! (.-title js/document) "Rep Calculator")
 
-(session/global-put! :saved? false)
+(session/global-put! :one-rm nil)
 
 (def form
   [:div
    (util/text-input-group "Rep Calculator"
-                          [[:person.height "Weight" :numeric]
-                           [:person.weight "Reps" :numeric]])])
+                          [[:weight "Weight" :numeric]
+                           [:reps "Reps" :numeric]])])
 
-(defn save-doc
+#_(defn save-doc
   "use Ajax to hit the /save endpoint on the backend"
   [doc]
   (fn []
@@ -24,16 +24,34 @@
           {:params {:doc @doc}
            :handler (fn [_] (session/global-put! :saved? true))})))
 
+(defn one-rm-handler [response]
+  (.log js/console "Resp: " response)
+  (session/global-put! :one-rm response))
+
+(defn one-rm-error-handler [{:keys [status status-text]}]
+  (.log js/console (str "one-rm: something bad happened: " status " " status-text)))
+
+(defn get-one-rm
+  [info]
+  (fn []
+    (.log js/console "Val: " @info)
+    (POST "/one-rm"
+          {:params {:transit @info}
+           :handler one-rm-handler
+           :error-handler one-rm-error-handler
+           :response-format :json
+           :keywords? true})))
+
 (defn rep-calculator []
-  (let [doc (atom {})]
+  (let [info (atom {})]
     (fn []
       [:div
-       [bind-fields form doc
-        (fn [_ _ _] (session/global-put! :saved? false) nil)]
+       [bind-fields form info
+        (fn [_ _ _] (session/global-put! :one-rm nil) nil)]
        [:button {:type "submit"
                  :class "btn btn-default"
-                 :onClick (save-doc doc)}
-        "Submit"]
-       (if (session/global-state :saved?)
-         [:p [:span.label.label-success "Saved"]]
+                 :onClick (get-one-rm info)}
+        "Calculate"]
+       (if (session/global-state :one-rm)
+         [:p [:span.label.label-success (str (session/global-state :one-rm))]]
          [:p ""])])))

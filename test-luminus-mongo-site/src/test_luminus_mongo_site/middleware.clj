@@ -14,7 +14,7 @@
 
 (def development-middleware
   [#_log-request
-   wrap-error-page
+   #_wrap-error-page
    wrap-exceptions])
 
 (def production-middleware
