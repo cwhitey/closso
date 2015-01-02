@@ -43,6 +43,6 @@
                 [:script {:type "text/javascript"}
                          "goog.require(\"test_luminus_mongo_site.app\");"]]]
         x)
-      #_(for [x [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.min.js")
+      (for [x [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.min.js")
                (include-js "js/app.js")]]
         x))]))

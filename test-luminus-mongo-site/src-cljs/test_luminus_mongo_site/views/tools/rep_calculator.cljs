@@ -12,10 +12,8 @@
 (def form
   [:div
    (util/text-input-group "Rep Calculator"
-                          [[:person.height "Height" :numeric]
-                           [:person.weight "Weight" :numeric]
-                           [:person.first-name "First name" :text]
-                           [:person.last-name "Last name" :text]])])
+                          [[:person.height "Weight" :numeric]
+                           [:person.weight "Reps" :numeric]])])
 
 (defn save-doc
   "use Ajax to hit the /save endpoint on the backend"
