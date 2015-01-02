@@ -40,10 +40,9 @@
       (for [x  [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.js")
                 (include-js "js/out/goog/base.js")
                 (include-js "js/app.js")
-                [:script
-                 {:type "text/javascript"}
-                 "goog.require(\"test_luminus_mongo_site.app\");"]]]
+                [:script {:type "text/javascript"}
+                         "goog.require(\"test_luminus_mongo_site.app\");"]]]
         x)
-      (for [x [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.min.js")
+      #_(for [x [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.min.js")
                (include-js "js/app.js")]]
         x))]))

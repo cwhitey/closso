@@ -24,7 +24,7 @@
    [com.taoensso/timbre "3.3.1"]
    [cljs-ajax "0.3.3"]
    [noir-exception "0.2.3"]
-   [org.clojure/clojurescript "0.0-2511"]
+   [org.clojure/clojurescript "0.0-2629"]
    [lib-noir "0.9.5"]
    [org.clojure/clojure "1.6.0"]
    [environ "1.0.0"]
@@ -39,7 +39,7 @@
   [[lein-ring "0.8.13"]
    [lein-environ "1.0.0"]
    [lein-ancient "0.5.5"]
-   [lein-cljsbuild "1.0.3"]
+   [lein-cljsbuild "1.0.4"]
    [hiccup-bridge "1.0.1"]
    [lein-figwheel "0.2.0-SNAPSHOT"]]
   :ring
@@ -53,7 +53,7 @@
      :builds
      {:app
       {:source-paths ["env/prod/cljs"],
-       :compiler {:optimizations :advanced, :pretty-print false}}}},
+       :compiler {:optimizations :advanced, :false pretty-print}}}},
     :hooks [leiningen.cljsbuild],
     :omit-source true,
     :env {:production true},
