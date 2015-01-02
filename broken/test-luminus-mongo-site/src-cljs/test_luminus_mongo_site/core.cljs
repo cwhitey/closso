@@ -6,8 +6,6 @@
             [reagent.core :as reagent :refer [atom]]
             [ajax.core :refer [POST]]))
 
-
-
 ; render page
 (defn page-render []
   [:div.container
@@ -22,7 +20,7 @@
 
 ;; initialize app
 (defn init! []
-  (session/global-put! :current-page (pages :home))
+  (session/global-put! :current-page (:page (:home pages)))
   (reagent/render-component [page-component]
                            (.getElementById js/document "app")))
 ;render this entire app (this gets compiled to "app.js" as defined in project.clj)

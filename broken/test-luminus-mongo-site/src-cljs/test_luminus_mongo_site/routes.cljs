@@ -20,25 +20,26 @@
 
 ;; ----------
 ;; Routes
+
 (defn app-routes []
-  (secretary/set-config! :prefix "#")
+  ;(secretary/set-config! :prefix "#")
+  (defroute (:route (:home pages)) []
+    (change-page! (:home pages)))
 
-  (defroute "/" []
-    (change-page! (pages :home)))
+  (let [tools (:tools pages)]
+    (defroute (:route (:bmi tools)) []
+      (change-page! (:bmi tools)))
 
-  (defroute "/tools/bmi" []
-    (change-page! (:bmi (pages :tools))))
+    (defroute (:route (:rep-calculator tools)) []
+      (change-page! (:rep-calculator tools))))
 
-  (defroute "/tools/rep-calculator" []
-    (change-page! (:rep-calculator (pages :tools))))
+  (defroute (:route (:about pages)) []
+    (change-page! (:about pages)))
 
-  (defroute "/about" []
-    (change-page! (pages :about)))
+  (defroute (:route (:contact pages)) []
+    (change-page! (:contact pages)))
 
-  (defroute "/contact" []
-    (change-page! (pages :contact)))
-
-  (defroute "*" []
-    (change-page! (pages :not-found)))
+  (defroute (:route (:not-found pages)) []
+    (change-page! (:not-found pages)))
 
   (hook-browser-navigation!))

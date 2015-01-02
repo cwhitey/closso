@@ -6,26 +6,9 @@
             [test-luminus-mongo-site.views.contact :refer [contact]]
             [test-luminus-mongo-site.views.not-found :refer [not-found]]))
 
-(def pages {:home {:page home
-                   :route "/#/"
-                   :href "#/"
-                   :title "Home"}
-            :tools {:bmi {:page bmi
-                          :route "/#/tools/bmi"
-                          :href "#/tools/bmi"
-                          :title "BMI calculator"}
-                    :rep-calculator {:page rep-calculator
-                                     :route "/#/tools/rep-calculator"
-                                     :href "#/tools/rep-calculator"
-                                     :title "Rep Calculator"}}
-            :about {:page about
-                    :route "/#/about"
-                    :href "#/about"
-                    :title "About"}
-            :contact {:page contact
-                      :route "/#/contact"
-                      :href "#/contact"
-                      :title "Contact"}
-            :not-found {:page not-found
-                        :route "/#/*"
-                        :title "404 Not Found"}})
+(def pages {:home home
+            :tools {:bmi bmi
+                    :rep-calculator rep-calculator}
+            :about about
+            :contact contact
+            :not-found not-found})
