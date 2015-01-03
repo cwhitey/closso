@@ -3,8 +3,8 @@
 
 (defn input-row [label body]
   [:div.row
-   [:div.col-md-2 [:span label]]
-   [:div.col-md-3 body]])
+   [:div.col-md-4 [:span label]]
+   [:div.col-md-8 body]])
 
 (defn text-input
   [id label type]
@@ -24,3 +24,12 @@
              [:div.btn-group {:field :multi-select :id id}
               (for [[k label] items]
                 [:button.btn.btn-default {:key k} label])]))
+
+(defn table [column-names info & type]
+  [:div [:table {:class (str "table " (when (first type) (name (first type))))}
+         [:thead
+          (into [:tr] (for [data column-names]
+                        [:th data]))]
+         (into [:tbody] (for [row info]
+                          (into [:tr] (for [data row]
+                                        [:td data]))))]])
