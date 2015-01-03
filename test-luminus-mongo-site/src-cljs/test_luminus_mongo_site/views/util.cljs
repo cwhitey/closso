@@ -26,8 +26,9 @@
               (for [[k label] items]
                 [:button.btn.btn-default {:key k} label])]))
 
-(defn table [column-names info & type]
-  [:div [:table {:class (str "table " (when (first type) (name (first type))))}
+(defn table [column-names info & class]
+  [:div [:table {:class (str "table " (when (not-empty class)
+                                        (apply str (interpose " " (map name class)))))}
          [:thead
           (into [:tr] (for [data column-names]
                         [:th data]))]

@@ -20,10 +20,15 @@
                             :aria-expanded "false"}
         "Programs" [:span.caret]]
        [:ul.dropdown-menu {:role :menu}
+        [:li.dropdown-header "Powerlifting"]
         [:li
          [:a {:href "#/"} "5/3/1"]]
         [:li
-         [:a {:href "#/"} "Madcow"]]]]
+         [:a {:href "#/"} "Madcow"]]
+        [:li.divider]
+        [:li.dropdown-header "Hybrid"]
+        [:li
+         [:a {:href "#/"} "PHAT"]]]]
       [:li.dropdown
        [:a.dropdown-toggle {:href "#/"
                             :data-toggle "dropdown"
@@ -32,7 +37,7 @@
         "Tools" [:span.caret]]
        [:ul.dropdown-menu {:role :menu}
         [:li {:class (active? (:bmi (:tools pages)))}
-         [:a {:href "#/tools/bmi"} "BMI"]]
+         [:a {:href "#/tools/bmi"} "BMI Calculator"]]
         [:li {:class (active? (:rep-calculator (:tools pages)))}
          [:a {:href "#/tools/rep-calculator"} "Rep Calculator"]]]]
       [:li {:class (active? (:about pages))}
