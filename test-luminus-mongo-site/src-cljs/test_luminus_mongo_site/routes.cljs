@@ -24,21 +24,22 @@
   (secretary/set-config! :prefix "#")
 
   (defroute "/" []
-    (change-page! (pages :home)))
+    (change-page! (pages :home) "Welcome to Closso"))
 
   (defroute "/tools/bmi" []
-    (change-page! (:bmi (pages :tools))))
+    (change-page! (:bmi (pages :tools)) "BMI"))
 
   (defroute "/tools/rep-calculator" []
-    (change-page! (:rep-calculator (pages :tools))))
+    (change-page! (:rep-calculator (pages :tools)) "Rep Calculator"))
 
   (defroute "/about" []
-    (change-page! (pages :about)))
+    (change-page! (pages :about) "About"))
 
   (defroute "/contact" []
-    (change-page! (pages :contact)))
+    (change-page! (pages :contact) "Contact"))
 
+  ;this is probably bad
   (defroute "*" []
-    (change-page! (pages :not-found)))
+    (change-page! (pages :not-found) "404 Not Found"))
 
   (hook-browser-navigation!))

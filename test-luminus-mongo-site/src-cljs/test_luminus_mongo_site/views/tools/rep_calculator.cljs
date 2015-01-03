@@ -5,8 +5,6 @@
             [reagent-forms.core :refer [bind-fields]]
             [ajax.core :refer [POST]]))
 
-(set! (.-title js/document) "Rep Calculator")
-
 (session/global-put! :one-rm nil)
 
 (def form
@@ -48,10 +46,9 @@
       [:div
        [bind-fields form info
         (fn [_ _ _] (session/global-put! :one-rm nil) nil)]
-       [:button {:type "submit"
-                 :class "btn btn-default"
-                 :onClick (get-one-rm info)}
-        "Calculate"]
-       (if (session/global-state :one-rm)
-         [:p [:span.label.label-success (str (session/global-state :one-rm))]]
-         [:p ""])])))
+       [:p [:button {:type "submit"
+                     :class "btn btn-default"
+                     :onClick (get-one-rm info)}
+            "Calculate"]
+        (when (session/global-state :one-rm)
+          [:h3 [:span.label.label-success (str (session/global-state :one-rm))]])]])))

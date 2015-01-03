@@ -16,5 +16,9 @@
 (defn local-put! [a k v]
   (swap! a assoc k v))
 
-(defn change-page! [page]
-  (global-put! :current-page page))
+(defn change-page!
+  ([page]
+   (change-page! page "Untitled"))
+  ([page title]
+   (global-put! :current-page page)
+   (set! (.-title js/document) title)))
