@@ -18,6 +18,17 @@
                             :data-toggle "dropdown"
                             :role "button"
                             :aria-expanded "false"}
+        "Programs" [:span.caret]]
+       [:ul.dropdown-menu {:role :menu}
+        [:li
+         [:a {:href "#/"} "5/3/1"]]
+        [:li
+         [:a {:href "#/"} "Madcow"]]]]
+      [:li.dropdown
+       [:a.dropdown-toggle {:href "#/"
+                            :data-toggle "dropdown"
+                            :role "button"
+                            :aria-expanded "false"}
         "Tools" [:span.caret]]
        [:ul.dropdown-menu {:role :menu}
         [:li {:class (active? (:bmi (:tools pages)))}
