@@ -5,12 +5,11 @@
             [reagent-forms.core :refer [bind-fields]]
             [ajax.core :refer [POST]]))
 
-(session/global-put! :one-rm nil)
+(session/global-put! :rep-calc nil)
 
 (def form
   [:div
-   (util/text-input-group "Rep Calculator"
-                          [[:reps "Reps" :numeric]
+   (util/text-input-group [[:reps "Reps" :numeric]
                            [:weight "Weight" :numeric]])])
 
 #_(defn save-doc
@@ -24,10 +23,10 @@
 
 (defn rep-handler [response]
   (.log js/console "Resp: " response)
-  (session/global-put! :one-rm response))
+  (session/global-put! :rep-calc response))
 
-(defn rep-error-handler [{:keys [status status-text]}]
-  (.log js/console (str "one-rm: something bad happened: " status " " status-text)))
+(defn rep-error-handler [x]
+  (.log js/console (str "rep-calc: something bad happened: " x)))
 
 (defn get-rep-vals
   [info]
@@ -46,8 +45,8 @@
               :table-striped))
 
 (defn rep-table-fill []
-  (sort-by first (if (session/global-state :one-rm)
-                   (session/global-state :one-rm)
+  (sort-by first (if (session/global-state :rep-calc)
+                   (session/global-state :rep-calc)
                    (map (fn [x] [x ""]) (conj (range 1 13) 15)))))
 
 (defn rep-calculator []
@@ -55,8 +54,10 @@
     (fn []
       [:div.col-md-12
        [:div.col-md-6
+        [:h1 "Rep Calculator"]
+        [:p "Enter the number of reps (between 1 and 10) and the weight you did in the form below. The amount of weight you should (probably) be able to lift will be propogated in the table."]
         [bind-fields form info
-         (fn [_ _ _] (session/global-put! :one-rm nil) nil)]
+         (fn [_ _ _] (session/global-put! :rep-calc nil) nil)]
         [:p [:button {:type "submit"
                       :class "btn btn-default"
                       :onClick (get-rep-vals info)}

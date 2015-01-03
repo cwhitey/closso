@@ -13,8 +13,9 @@
    [:input.form-control {:field type :id id}]))
 
 (defn text-input-group
-  [name inputs]
-  [:div [:div.page-heading [:h2 name]]
+  [inputs & name]
+  [:div
+   (when (not-empty name) [:div.page-heading [:h2 (first name)]])
    (into [:div]
          (for [[id label type] inputs]
            (text-input id label type)))])
