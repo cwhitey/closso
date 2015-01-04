@@ -12,7 +12,7 @@
 (defn page-render []
   [:div.container
    [common/header]
-   [(session/global-state :current-page)]])
+   [:div.col-md-offset-1.col-md-10 [(session/global-state :current-page)]]])
 
 (defn page-component []
   (reagent/create-class {:component-will-mount routes/app-routes

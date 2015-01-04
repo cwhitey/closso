@@ -32,6 +32,9 @@
   (defroute "/tools/rep-calculator" []
     (change-page! (:rep-calculator (pages :tools)) "Rep Calculator"))
 
+  (defroute "/programs/531" []
+    (change-page! (:five-three-one (pages :programs)) "5/3/1"))
+
   (defroute "/about" []
     (change-page! (pages :about) "About"))
 

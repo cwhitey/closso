@@ -21,8 +21,8 @@
         "Programs" [:span.caret]]
        [:ul.dropdown-menu {:role :menu}
         [:li.dropdown-header "Powerlifting"]
-        [:li
-         [:a {:href "#/"} "5/3/1"]]
+        [:li {:class (active? (:five-three-one (:programs pages)))}
+         [:a {:href "#/programs/531"} "5/3/1"]]
         [:li
          [:a {:href "#/"} "Madcow"]]
         [:li.divider]

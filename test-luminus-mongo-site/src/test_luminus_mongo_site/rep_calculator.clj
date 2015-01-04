@@ -28,7 +28,7 @@
   (map (fn [[k v]] [k (Math/round (* one-rm (perc (avg v))))]) rep-data))
 
 (defn rep-calculator [reps weight]
-  (if (< 10 reps)
+  (if (< 12 reps)
     {:status 400
      :body "Reps must be between 0 and 10."}
     {:status 200

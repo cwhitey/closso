@@ -2,15 +2,9 @@
   (:require [test-luminus-mongo-site.views.util :as util]
             [test-luminus-mongo-site.session :as session]
             [reagent.core :as reagent :refer [atom]]
-            [reagent-forms.core :refer [bind-fields]]
-            [ajax.core :refer [POST]]))
+            [reagent-forms.core :refer [bind-fields]]))
 
 (session/global-put! :rep-calc nil)
-
-(def form
-  [:div
-   (util/text-input-group [[:reps "Reps" :numeric]
-                           [:weight "Weight" :numeric]])])
 
 #_(defn save-doc
   "use Ajax to hit the /save endpoint on the backend"
@@ -28,21 +22,13 @@
 (defn rep-error-handler [x]
   (.log js/console (str "rep-calc: something bad happened: " x)))
 
-(defn get-rep-vals
-  [info]
-  (fn []
-    (.log js/console "Val: " @info)
-    (POST "/rep-calc"
-          {:params {:transit @info}
-           :handler rep-handler
-           :error-handler rep-error-handler
-           :response-format :json
-           :keywords? true})))
+(def form (util/form [(util/text-input :reps "Reps" :numeric "1 - 12")
+                      (util/text-input :weight "Weight" :numeric)]))
 
 (defn rep-table [info]
-  (util/table ["Reps" "Weight"]
-              info
-              :table-striped))
+  [util/table ["Reps" "Weight"]
+   info
+   {:class "table table-striped"}])
 
 (defn rep-table-fill []
   (sort-by first (if (session/global-state :rep-calc)
@@ -52,14 +38,18 @@
 (defn rep-calculator []
   (let [info (atom {})]
     (fn []
-      [:div.col-md-12
+      [:div
        [:div.col-md-6
         [:h1 "Rep Calculator"]
-        [:p "Enter the number of reps (between 1 and 10) and the weight you did in the form below. The amount of weight you should (probably) be able to lift will be propogated in the table."]
-        [bind-fields form info
-         (fn [_ _ _] (session/global-put! :rep-calc nil) nil)]
-        [:div.col-md-offset-2 [:button {:type "submit"
-                      :class "btn btn-default"
-                      :onClick (get-rep-vals info)}
-             "Calculate"]]]
+        [:p "Enter the number of reps (between 1 and 12) and the weight you did in the form below. The amount of weight you should (probably) be able to lift will be propogated in the table."]
+        [:div.well
+         [bind-fields form info
+          (fn [_ _ _] (session/global-put! :rep-calc nil) nil)]
+         [:button.col-md-offset-2 {:class "btn btn-default"
+                                   :type "submit"
+                                   :onClick #(util/ajax-post info
+                                                             "/rep-calc"
+                                                             rep-handler
+                                                             rep-error-handler)}
+          "Calculate"]]]
        [:div.col-md-6 [rep-table (rep-table-fill)]]])))
