@@ -58,7 +58,7 @@
         [:p "Enter the number of reps (between 1 and 10) and the weight you did in the form below. The amount of weight you should (probably) be able to lift will be propogated in the table."]
         [bind-fields form info
          (fn [_ _ _] (session/global-put! :rep-calc nil) nil)]
-        [:p [:button {:type "submit"
+        [:div.col-md-offset-2 [:button {:type "submit"
                       :class "btn btn-default"
                       :onClick (get-rep-vals info)}
              "Calculate"]]]
