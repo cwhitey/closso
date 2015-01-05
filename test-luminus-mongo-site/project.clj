@@ -41,7 +41,8 @@
    [lein-ancient "0.5.5"]
    [lein-cljsbuild "1.0.4"]
    [hiccup-bridge "1.0.1"]
-   [lein-figwheel "0.2.0-SNAPSHOT"]]
+   [lein-figwheel "0.2.0-SNAPSHOT"]
+   [lein-bikeshed "0.2.0"]]
   :ring
   {:handler test-luminus-mongo-site.handler/app,
    :init test-luminus-mongo-site.handler/init,

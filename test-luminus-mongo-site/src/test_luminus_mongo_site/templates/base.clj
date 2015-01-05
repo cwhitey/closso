@@ -6,7 +6,8 @@
    [:head
     [:meta
      {:content "text/html; charset=UTF-8", :http-equiv "Content-Type"}]
-    [:title (:title contents)]]
+    [:title (:title contents)]
+    [:link {:rel "icon" :type "image/gif" :href "img/favicon.ico"}]]
    [:body
     [:div#navbar]
     [:div.container
