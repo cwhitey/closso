@@ -48,7 +48,7 @@
          [:button.col-md-offset-2 {:class "btn btn-default"
                                    :type "submit"
                                    :onClick #(util/ajax-post info
-                                                             "/rep-calc"
+                                                             "tools/rep-calc"
                                                              rep-handler
                                                              rep-error-handler)}
           "Calculate"]]]

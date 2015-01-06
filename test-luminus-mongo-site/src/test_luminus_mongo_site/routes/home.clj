@@ -22,7 +22,11 @@
   (GET "/" [] (base))
   (POST "/save" {:keys [body-params]}
         (edn (save-document body-params)))
-  (POST "/rep-calc" {:keys [body-params]}
-        (timbre/info body-params)
-        (rep-calculator (:reps (:transit body-params))
-                        (:weight (:transit body-params)))))
+  (POST "/tools/rep-calc" {{data :transit} :body-params}
+        (timbre/info data)
+        (rep-calculator (:reps data)
+                        (:weight data)))
+  (POST "/programs/531" {{data :transit} :body-params}
+        (timbre/info data)
+        ;insert 531 program calculation stuff here
+        ))
