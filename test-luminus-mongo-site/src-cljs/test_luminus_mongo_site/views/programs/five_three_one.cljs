@@ -24,8 +24,7 @@
                       (util/text-input :bench-press.weight "Weight" :numeric)
                       [:legend "Overhead Press"]
                       (util/text-input :overhead-press.reps "Reps" :numeric "1 - 12")
-                      (util/text-input :overhead-press.weight "Weight" :numeric)]
-                     ))
+                      (util/text-input :overhead-press.weight "Weight" :numeric)]))
 
 (defn program-table [info]
   [util/table ["Exercises" "Week 1" "Week 2" "Week 3" "Week 4"]
