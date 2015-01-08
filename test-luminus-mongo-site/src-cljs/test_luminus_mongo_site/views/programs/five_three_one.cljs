@@ -14,17 +14,17 @@
   (.log js/console (str "five-three-one: something bad happened: " x)))
 
 (def form (util/form [[:legend "Squat"]
-                      (util/text-input :squat.reps "Reps" :numeric "1 - 12")
-                      (util/text-input :squat.weight "Weight" :numeric)
+                      [:div.col-md-6 (util/text-input :squat.reps "Reps" :numeric "1 - 12")]
+                      [:div.col-md-6 (util/text-input :squat.weight "Weight" :numeric)]
                       [:legend "Deadlift"]
-                      (util/text-input :deadlift.reps "Reps" :numeric "1 - 12")
-                      (util/text-input :deadlift.weight "Weight" :numeric)
+                      [:div.col-md-6 (util/text-input :deadlift.reps "Reps" :numeric "1 - 12")]
+                      [:div.col-md-6 (util/text-input :deadlift.weight "Weight" :numeric)]
                       [:legend "Bench Press"]
-                      (util/text-input :bench-press.reps "Reps" :numeric "1 - 12")
-                      (util/text-input :bench-press.weight "Weight" :numeric)
+                      [:div.col-md-6 (util/text-input :bench-press.reps "Reps" :numeric "1 - 12")]
+                      [:div.col-md-6 (util/text-input :bench-press.weight "Weight" :numeric)]
                       [:legend "Overhead Press"]
-                      (util/text-input :overhead-press.reps "Reps" :numeric "1 - 12")
-                      (util/text-input :overhead-press.weight "Weight" :numeric)]))
+                      [:div.col-md-6 (util/text-input :overhead-press.reps "Reps" :numeric "1 - 12")]
+                      [:div.col-md-6 (util/text-input :overhead-press.weight "Weight" :numeric)]]))
 
 (defn program-table [info]
   [util/table ["Exercises" "Week 1" "Week 2" "Week 3" "Week 4"]
@@ -46,10 +46,10 @@
         [bind-fields form info
          (fn [_ _ _] (session/global-put! :program-531 nil) nil)]
         [:button {:class "btn btn-default"
-                  :type "submit"
-                  :onClick #(util/ajax-post info
-                                            "/programs/531"
-                                            program-handler
-                                            program-error-handler)}
-         "Calculate"]]
+                                         :type "submit"
+                                         :onClick #(util/ajax-post info
+                                                                   "/programs/531"
+                                                                   program-handler
+                                                                   program-error-handler)}
+                                "Calculate"]]
        #_[program-table (program-table-fill)]])))
