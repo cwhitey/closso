@@ -3,7 +3,8 @@
                       [test-luminus-mongo-site.util :as util]
                       [test-luminus-mongo-site.logging :as log]
                       [test-luminus-mongo-site.templates.base :as base]
-                      [test-luminus-mongo-site.rep-calculator :refer [rep-calculator]]
+                      [test-luminus-mongo-site.tools.rep-calculator :refer [rep-calculator]]
+                      [test-luminus-mongo-site.programs.five-three-one :refer [five-three-one]]
                       [compojure.core :refer :all]
                       [noir.response :refer [edn]]
                       [clojure.pprint :refer [pprint]]
@@ -26,7 +27,7 @@
         (timbre/info data)
         (rep-calculator (:reps data)
                         (:weight data)))
-  (POST "/programs/531" {{data :transit} :body-params}
+  (POST "/programs/five-three-one" {{data :transit} :body-params}
         (timbre/info data)
         ;insert 531 program calculation stuff here
         ))

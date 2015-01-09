@@ -1,4 +1,4 @@
-(ns test-luminus-mongo-site.rep-calculator
+(ns test-luminus-mongo-site.tools.rep-calculator
   (:require [taoensso.timbre :as timbre]))
 
 ;info drawn from http://www.exrx.net/Calculators/OneRepMax.html

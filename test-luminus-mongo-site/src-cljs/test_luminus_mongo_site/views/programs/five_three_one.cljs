@@ -48,7 +48,7 @@
         [:button {:class "btn btn-default"
                                          :type "submit"
                                          :onClick #(util/ajax-post info
-                                                                   "/programs/531"
+                                                                   "/programs/five-three-one"
                                                                    program-handler
                                                                    program-error-handler)}
                                 "Calculate"]]
