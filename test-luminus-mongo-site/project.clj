@@ -6,7 +6,7 @@
   :url
   "http://localhost:3000/"
   :dependencies
-  [[com.novemberain/monger "2.0.0"]
+  [[com.novemberain/monger "2.0.1"]
    [log4j
     "1.2.17"
     :exclusions
@@ -14,23 +14,24 @@
      javax.jms/jms
      com.sun.jdmk/jmxtools
      com.sun.jmx/jmxri]]
-   [selmer "0.7.7"]
+   [selmer "0.7.9"]
    [hiccup "1.0.5"]
    [com.taoensso/tower "3.0.2"]
-   [reagent-forms "0.2.9"]
-   [prone "0.6.1"]
-   [markdown-clj "0.9.58" :exclusions [com.keminglabs/cljx]]
+   [reagent-forms "0.3.9"]
+   [prone "0.8.0"]
+   [markdown-clj "0.9.62" :exclusions [com.keminglabs/cljx]]
    [im.chit/cronj "1.4.3"]
    [com.taoensso/timbre "3.3.1"]
-   [cljs-ajax "0.3.3"]
+   [cljs-ajax "0.3.4"]
    [noir-exception "0.2.3"]
    [org.clojure/clojurescript "0.0-2629"]
    [lib-noir "0.9.5"]
    [org.clojure/clojure "1.6.0"]
    [environ "1.0.0"]
-   [ring-server "0.3.1"]
+   [ring-server "0.4.0"]
    [secretary "1.2.1"]
-   [figwheel "0.2.0-SNAPSHOT"]]
+   [figwheel "0.2.0-SNAPSHOT"]
+   [org.flatland/useful "0.11.3"]]
   :repl-options
   {:init-ns test-luminus-mongo-site.repl}
   :jvm-opts
