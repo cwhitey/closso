@@ -25,6 +25,7 @@
 
 (defn get-rep-vals
   [one-rm]
+
   (map (fn [[k v]] [k (Math/round (* one-rm (perc (avg v))))]) rep-data))
 
 (defn rep-calculator [reps weight]

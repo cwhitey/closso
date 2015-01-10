@@ -29,5 +29,4 @@
                         (:weight data)))
   (POST "/programs/five-three-one" {{data :transit} :body-params}
         (timbre/info data)
-        ;insert 531 program calculation stuff here
-        ))
+        (five-three-one data)))
