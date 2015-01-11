@@ -2,4 +2,4 @@
   (:require [test-luminus-mongo-site.tools.rep-calculator :refer [get-one-rm]]
             [flatland.useful.map :refer [map-vals]]))
 
-(defn five-three-one [lifts] )
+(defn five-three-one [lifts] nil)
