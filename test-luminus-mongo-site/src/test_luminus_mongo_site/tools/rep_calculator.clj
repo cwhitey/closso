@@ -1,5 +1,6 @@
 (ns test-luminus-mongo-site.tools.rep-calculator
-  (:require [taoensso.timbre :as timbre]))
+  (:require [test-luminus-mongo-site.util :as util]
+            [taoensso.timbre :as timbre]))
 
 ;info drawn from http://www.exrx.net/Calculators/OneRepMax.html
 
@@ -17,20 +18,16 @@
                12 [70 67 65]
                15 [65 60]})
 
-(def avg #(/ (reduce + %) (count %)))
-(def perc #(/ % 100))
-
 (defn get-one-rm [reps weight]
   (/ weight (- 1.0278 (* 0.0278 reps))))
 
 (defn get-rep-vals
   [one-rm]
-
-  (map (fn [[k v]] [k (Math/round (* one-rm (perc (avg v))))]) rep-data))
+  (map (fn [[k v]] [k (Math/round (* one-rm (util/perc (util/avg v))))]) rep-data))
 
 (defn rep-calculator [reps weight]
   (if (< 12 reps)
     {:status 400
-     :body "Reps must be between 0 and 10."}
+     :body "Reps can only be 1-12."}
     {:status 200
      :body (get-rep-vals (get-one-rm reps weight))}))

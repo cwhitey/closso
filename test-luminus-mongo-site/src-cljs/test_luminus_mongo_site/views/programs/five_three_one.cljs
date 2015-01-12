@@ -26,15 +26,32 @@
                       [:div.col-md-6 (util/text-input :overhead-press.reps "Reps" :numeric "1 - 12")]
                       [:div.col-md-6 (util/text-input :overhead-press.weight "Weight" :numeric)]]))
 
-(defn program-table [info]
-  [util/table ["Exercises" "Week 1" "Week 2" "Week 3" "Week 4"]
-   info
-   {:class "table table-striped"}])
+(defn get-sets-from-week [week]
+  (map (fn [[weight reps]] (str weight " x " reps)) week))
 
-(defn program-table-fill []
-  (sort-by first (if (session/global-state :program-531)
-                   (session/global-state :program-531)
-                   (map (fn [x] [x ""]) (conj (range 1 13) 15)))))
+(defn get-training-week-from-data [data week]
+  (map (fn [[k v]] (let [week (get v week)
+                         sets (get-sets-from-week week)]
+                     (conj [k] sets))) data))
+
+(defn program-tables []
+  (let [data (session/global-state :program-531)]
+    [:h2 "Week 1"]
+    [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+     (get-training-week-from-data data 1)
+     {:class "table table-striped"}]
+    [:h2 "Week 2"]
+    [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+     (get-training-week-from-data data 2)
+     {:class "table table-striped"}]
+    [:h2 "Week 3"]
+    [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+     (get-training-week-from-data data 3)
+     {:class "table table-striped"}]
+    [:h2 "Week 4 (Deload)"]
+    [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+     (get-training-week-from-data data 4)
+     {:class "table table-striped"}]))
 
 (defn five-three-one []
   (let [info (atom {})]
@@ -46,10 +63,11 @@
         [bind-fields form info
          (fn [_ _ _] (session/global-put! :program-531 nil) nil)]
         [:button {:class "btn btn-default"
-                                         :type "submit"
-                                         :onClick #(util/ajax-post info
-                                                                   "/programs/five-three-one"
-                                                                   program-handler
-                                                                   program-error-handler)}
-                                "Calculate"]]
-       #_[program-table (program-table-fill)]])))
+                  :type "submit"
+                  :onClick #(util/ajax-post info
+                                            "/programs/five-three-one"
+                                            #_(.log js/console "hi") program-handler
+                                            program-error-handler)}
+         "Calculate"]]
+       (when (session/global-state :program-531)
+         [program-tables])])))

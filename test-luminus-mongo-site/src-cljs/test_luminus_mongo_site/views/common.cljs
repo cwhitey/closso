@@ -23,12 +23,12 @@
         [:li.dropdown-header "Powerlifting"]
         [:li {:class (active? (:five-three-one (:programs pages)))}
          [:a {:href "#/programs/531"} "5/3/1"]]
-        [:li
-         [:a {:href "#/"} "Madcow"]]
+        [:li.disabled {:class (active? (:madcow (:programs pages)))}
+         [:a {:href "#/programs/madcow"} "Madcow"]]
         [:li.divider]
         [:li.dropdown-header "Hybrid"]
-        [:li
-         [:a {:href "#/"} "PHAT"]]]]
+        [:li.disabled {:class (active? (:phat (:programs pages)))}
+         [:a {:href "#/programs/phat"} "PHAT"]]]]
       [:li.dropdown
        [:a.dropdown-toggle {:href "#/"
                             :data-toggle "dropdown"
@@ -46,4 +46,4 @@
        [:a {:href "#/contact"} "Contact"]]]
      [:ul.nav.navbar-nav.navbar-right
       [:li
-       [:button.btn.btn-default.navbar-btn "Sign in"]]]]]])
+       [:button.btn.btn-default.navbar-btn.disabled "Sign in"]]]]]])

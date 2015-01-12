@@ -22,9 +22,9 @@
    [markdown-clj "0.9.62" :exclusions [com.keminglabs/cljx]]
    [im.chit/cronj "1.4.3"]
    [com.taoensso/timbre "3.3.1"]
-   [cljs-ajax "0.3.4"]
+   [cljs-ajax "0.3.8"]
    [noir-exception "0.2.3"]
-   [org.clojure/clojurescript "0.0-2629"]
+   [org.clojure/clojurescript "0.0-2665"]
    [lib-noir "0.9.5"]
    [org.clojure/clojure "1.6.0"]
    [environ "1.0.0"]
@@ -85,6 +85,7 @@
       :output-to "resources/public/js/app.js",
       :source-map "resources/public/js/out.js.map",
       :pretty-print true}}}}
+  :clean-targets ^{:protect false} ["resources/public/js/out"]
   :uberjar-name
   "test-luminus-mongo-site.jar"
   :min-lein-version "2.0.0")

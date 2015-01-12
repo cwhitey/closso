@@ -15,3 +15,6 @@
        j-io/resource
        slurp
        edn/read-string))
+
+(def avg #(/ (reduce + %) (count %)))
+(def perc #(/ % 100))
