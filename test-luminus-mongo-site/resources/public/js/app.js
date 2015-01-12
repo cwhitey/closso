@@ -1,15 +1,14 @@
-// Compiled by ClojureScript 0.0-2629 {}
 goog.addDependency("base.js", ['goog'], []);
 goog.addDependency("../cljs/core.js", ['cljs.core'], ['goog.string', 'goog.object', 'goog.string.StringBuffer', 'goog.array']);
-goog.addDependency("../reagent/impl/reactimport.js", ['reagent.impl.reactimport'], ['cljs.core']);
+goog.addDependency("../reagent/interop.js", ['reagent.interop'], ['cljs.core']);
 goog.addDependency("../reagent/debug.js", ['reagent.debug'], ['cljs.core']);
 goog.addDependency("../clojure/string.js", ['clojure.string'], ['goog.string', 'cljs.core', 'goog.string.StringBuffer']);
-goog.addDependency("../reagent/impl/util.js", ['reagent.impl.util'], ['reagent.impl.reactimport', 'cljs.core', 'reagent.debug', 'clojure.string']);
+goog.addDependency("../reagent/impl/util.js", ['reagent.impl.util'], ['reagent.interop', 'cljs.core', 'reagent.debug', 'clojure.string']);
 goog.addDependency("../reagent/ratom.js", ['reagent.ratom'], ['cljs.core']);
-goog.addDependency("../reagent/impl/batching.js", ['reagent.impl.batching'], ['reagent.impl.util', 'reagent.ratom', 'cljs.core', 'reagent.debug', 'clojure.string']);
-goog.addDependency("../reagent/impl/component.js", ['reagent.impl.component'], ['reagent.impl.util', 'reagent.ratom', 'cljs.core', 'reagent.impl.batching', 'reagent.debug']);
-goog.addDependency("../reagent/impl/template.js", ['reagent.impl.template'], ['reagent.impl.util', 'reagent.ratom', 'cljs.core', 'reagent.impl.batching', 'reagent.impl.component', 'reagent.debug', 'clojure.string']);
-goog.addDependency("../reagent/core.js", ['reagent.core'], ['reagent.impl.util', 'reagent.ratom', 'cljs.core', 'reagent.impl.template', 'reagent.impl.batching', 'reagent.impl.component']);
+goog.addDependency("../reagent/impl/batching.js", ['reagent.impl.batching'], ['reagent.impl.util', 'reagent.interop', 'reagent.ratom', 'cljs.core', 'reagent.debug', 'clojure.string']);
+goog.addDependency("../reagent/impl/component.js", ['reagent.impl.component'], ['reagent.impl.util', 'reagent.interop', 'reagent.ratom', 'cljs.core', 'reagent.impl.batching', 'reagent.debug']);
+goog.addDependency("../reagent/impl/template.js", ['reagent.impl.template'], ['reagent.impl.util', 'reagent.interop', 'reagent.ratom', 'cljs.core', 'reagent.impl.batching', 'reagent.impl.component', 'reagent.debug', 'clojure.string']);
+goog.addDependency("../reagent/core.js", ['reagent.core'], ['reagent.impl.util', 'reagent.interop', 'reagent.ratom', 'cljs.core', 'reagent.impl.template', 'reagent.impl.batching', 'reagent.impl.component', 'reagent.debug']);
 goog.addDependency("../test_luminus_mongo_site/session.js", ['test_luminus_mongo_site.session'], ['reagent.core', 'cljs.core']);
 goog.addDependency("../com/cognitect/transit/util.js", ['com.cognitect.transit.util'], ['goog.object']);
 goog.addDependency("../com/cognitect/transit/eq.js", ['com.cognitect.transit.eq'], ['com.cognitect.transit.util']);
@@ -20,7 +19,7 @@ goog.addDependency("../com/cognitect/transit/impl/decoder.js", ['com.cognitect.t
 goog.addDependency("../com/cognitect/transit/impl/reader.js", ['com.cognitect.transit.impl.reader'], ['com.cognitect.transit.impl.decoder', 'com.cognitect.transit.caching']);
 goog.addDependency("../com/cognitect/transit/handlers.js", ['com.cognitect.transit.handlers'], ['com.cognitect.transit.util', 'com.cognitect.transit.types', 'goog.math.Long']);
 goog.addDependency("../com/cognitect/transit/impl/writer.js", ['com.cognitect.transit.impl.writer'], ['com.cognitect.transit.util', 'com.cognitect.transit.caching', 'com.cognitect.transit.handlers', 'com.cognitect.transit.types', 'com.cognitect.transit.delimiters', 'goog.math.Long']);
-goog.addDependency("../com/cognitect/transit.js", ['com.cognitect.transit'], ['com.cognitect.transit.impl.reader', 'com.cognitect.transit.impl.writer', 'com.cognitect.transit.types', 'com.cognitect.transit.eq', 'com.cognitect.transit.impl.decoder']);
+goog.addDependency("../com/cognitect/transit.js", ['com.cognitect.transit'], ['com.cognitect.transit.impl.reader', 'com.cognitect.transit.impl.writer', 'com.cognitect.transit.types', 'com.cognitect.transit.eq', 'com.cognitect.transit.impl.decoder', 'com.cognitect.transit.caching']);
 goog.addDependency("../cognitect/transit.js", ['cognitect.transit'], ['com.cognitect.transit.eq', 'cljs.core', 'com.cognitect.transit.types', 'com.cognitect.transit', 'goog.math.Long']);
 goog.addDependency("../cljs/reader.js", ['cljs.reader'], ['goog.string', 'cljs.core', 'goog.string.StringBuffer']);
 goog.addDependency("../ajax/core.js", ['ajax.core'], ['goog.net.XhrManager', 'goog.net.XhrIo', 'goog.Uri.QueryData', 'goog.Uri', 'cljs.core', 'cognitect.transit', 'goog.net.EventType', 'goog.structs', 'goog.json.Serializer', 'clojure.string', 'cljs.reader', 'goog.events', 'goog.net.ErrorCode']);
