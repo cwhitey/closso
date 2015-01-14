@@ -17,18 +17,31 @@ To start MongoDB, run:
     sudo mongod
 
 To compile the cljs, run:
-    
+
     lein cljsbuild once
-    
+
 Or, to auto-compile after saves, run:
-    
+
     lein cljsbuild auto
     lein cljsbuild auto dev (?)
 
 To clean up files created by the above commands, run:
 
-    lein cljsbuild clean
+    lein clean
 
 To start a web server for the application, run:
 
     lein ring server
+
+## For Development
+
+Start figwheel to auto-compile and auto-push cljs/js to the browser:
+
+    lein figwheel
+
+In another terminal, run:
+
+    lein ring server
+
+Now after updating any ClojureScript you just have to reload your browser to
+pull in the changes!
