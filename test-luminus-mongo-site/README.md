@@ -5,7 +5,7 @@
 ## Prerequisites
 
  1. You will need [Leiningen][1] 2.0 or above installed.
- 2. You will need [MongoDB][2] installted.
+ 2. You will need [MongoDB][2] installed.
 
 [1]: https://github.com/technomancy/leiningen
 [2]: https://www.mongodb.org/downloads
