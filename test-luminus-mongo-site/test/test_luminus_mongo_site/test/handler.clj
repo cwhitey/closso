@@ -1,7 +1,7 @@
-(ns test-luminus-mongo-site.test.handler
+(ns closso.test.handler
   (:use clojure.test
         ring.mock.request
-        test-luminus-mongo-site.handler))
+        closso.handler))
 
 (deftest test-app
   (testing "main route"

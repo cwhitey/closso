@@ -1,5 +1,5 @@
-(ns test-luminus-mongo-site.app
-  (:require [test-luminus-mongo-site.core :as core]))
+(ns closso.app
+  (:require [closso.core :as core]))
 
 (enable-console-print!)
 

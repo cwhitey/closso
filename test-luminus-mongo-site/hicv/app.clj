@@ -2,12 +2,12 @@
   [:head
    [:meta
     {:content "text/html; charset=UTF-8", :http-equiv "Content-Type"}]
-   [:title "Welcome to test-luminus-mongo-site"]]
+   [:title "Welcome to closso"]]
   [:body
    [:div#navbar]
    [:div.container
     [:div.jumbotron
-     [:h1 "Welcome to test-luminus-mongo-site"]
+     [:h1 "Welcome to closso"]
      [:p "Time to start building your site!"]
      [:p
       [:a.btn.btn-primary.btn-lg
@@ -53,7 +53,7 @@
    "\n      {% script \"/js/out/goog/base.js\" %}\n      {% script \"/js/app.js\" %}\n      "
    [:script
     {:type "text/javascript"}
-    "goog.require(\"test_luminus_mongo_site.app\");"]
+    "goog.require(\"closso.app\");"]
    "\n    {% else %}\n      "
    [:script
     {:src

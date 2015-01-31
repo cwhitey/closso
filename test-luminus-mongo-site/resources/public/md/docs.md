@@ -3,14 +3,14 @@
  <p>Before continuing please follow the steps below to configure your MongoDB connection.</p>
  <ol>
    <li> Ensure that MongoDB is up and running.
-   <li> Add the connection parameters in the <code>test-luminus-mongo-site.db.core</code> namespace.
+   <li> Add the connection parameters in the <code>closso.db.core</code> namespace.
    <li> Restart the application.
  </ol>
 </div>
 
 ### Managing Your Middleware
 
-Request middleware functions are located under the `test-luminus-mongo-site.middleware` namespace.
+Request middleware functions are located under the `closso.middleware` namespace.
 A request logging helper called `log-request` has already been defined for you there.
 
 This namespace also defines two vectors for organizing the middleware called `development-middleware` and `production-middleware`.

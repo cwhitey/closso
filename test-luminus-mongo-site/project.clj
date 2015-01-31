@@ -1,5 +1,5 @@
 (defproject
-  test-luminus-mongo-site
+  closso
   "0.1.0-SNAPSHOT"
   :description
   "Currently a test site"
@@ -33,7 +33,7 @@
    [figwheel "0.2.0-SNAPSHOT"]
    [org.flatland/useful "0.11.3"]]
   :repl-options
-  {:init-ns test-luminus-mongo-site.repl}
+  {:init-ns closso.repl}
   :jvm-opts
   ["-server"]
   :plugins
@@ -45,9 +45,9 @@
    [lein-figwheel "0.2.0-SNAPSHOT"]
    [lein-bikeshed "0.2.0"]]
   :ring
-  {:handler test-luminus-mongo-site.handler/app,
-   :init test-luminus-mongo-site.handler/init,
-   :destroy test-luminus-mongo-site.handler/destroy}
+  {:handler closso.handler/app,
+   :init closso.handler/init,
+   :destroy closso.handler/destroy}
   :profiles
   {:uberjar
    {:cljsbuild
@@ -87,5 +87,5 @@
       :pretty-print true}}}}
   :clean-targets ^{:protect false} ["resources/public/js/out"]
   :uberjar-name
-  "test-luminus-mongo-site.jar"
+  "closso.jar"
   :min-lein-version "2.0.0")

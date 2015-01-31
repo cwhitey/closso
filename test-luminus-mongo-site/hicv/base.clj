@@ -1,7 +1,7 @@
 ("<!DOCTYPE HTML>"
  [:html
   [:head
-   [:title "Welcome to test-luminus-mongo-site"]
+   [:title "Welcome to closso"]
    [:link
     {:href
      "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css",
@@ -34,6 +34,6 @@
        [:span.icon-bar]]
       [:a.navbar-brand
        {:href "{{servlet-context}}/"}
-       "test-luminus-mongo-site"]]
+       "closso"]]
      "\n        {% block menu %}\n        {% include \"templates/menu.html\" %}\n        {% endblock %}\n    "]]
    [:div.container "\n    {% block content %}\n    {% endblock %}\n"]]])
