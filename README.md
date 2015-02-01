@@ -12,7 +12,7 @@
 
 ## Running
 
-To start MongoDB, run:
+Start MongoDB:
 
     sudo mongod
 
@@ -23,15 +23,14 @@ To compile the cljs, run:
 Or, to auto-compile after saves, run:
 
     lein cljsbuild auto
-    lein cljsbuild auto dev (?)
-
-To clean up files created by the above commands, run:
-
-    lein clean
 
 To start a web server for the application, run:
 
     lein ring server
+
+To clean up files created by the above commands, run:
+
+    lein clean
 
 ## For Development
 
@@ -45,3 +44,10 @@ In another terminal, run:
 
 Now after updating any ClojureScript you just have to reload your browser to
 pull in the changes!
+
+Start a ClojureScript REPL from a Clojure REPL
+
+    lein repl
+    => (def repl-env (reset! cemerick.austin.repls/browser-repl-env
+            (cemerick.austin/repl-env)))
+    => (cemerick.austin.repls/cljs-repl repl-env)

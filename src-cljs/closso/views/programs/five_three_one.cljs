@@ -7,7 +7,7 @@
 (session/global-put! :program-531 nil)
 
 (defn program-handler [response]
-  (.log js/console "Resp: " response)
+  (.log js/console "Resp: " (pr-str response))
   (session/global-put! :program-531 response))
 
 (defn program-error-handler [x]
@@ -36,22 +36,30 @@
 
 (defn program-tables []
   (let [data (session/global-state :program-531)]
-    [:h2 "Week 1"]
-    [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
-     (get-training-week-from-data data 1)
-     {:class "table table-striped"}]
-    [:h2 "Week 2"]
-    [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
-     (get-training-week-from-data data 2)
-     {:class "table table-striped"}]
-    [:h2 "Week 3"]
-    [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
-     (get-training-week-from-data data 3)
-     {:class "table table-striped"}]
-    [:h2 "Week 4 (Deload)"]
-    [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
-     (get-training-week-from-data data 4)
-     {:class "table table-striped"}]))
+    [:h2 "Squats"]
+
+    ;; [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+    ;;  (get-training-week-from-data data 1)
+    ;;  {:class "table table-striped"}]
+    ;; [:h2 "Week 2"]
+    ;; [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+    ;;  (get-training-week-from-data data 2)
+    ;;  {:class "table table-striped"}]
+    ;; [:h2 "Week 3"]
+    ;; [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+    ;;  (get-training-week-from-data data 3)
+    ;;  {:class "table table-striped"}]
+    ;; [:h2 "Week 4 (Deload)"]
+    ;; [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+    ;;  (get-training-week-from-data data 4)
+    ;;  {:class "table table-striped"}]
+    ))
+
+(defn get-program [info]
+  (util/ajax-post info
+                  "/programs/five-three-one"
+                  #_(.log js/console "hi") program-handler
+                  program-error-handler))
 
 (defn five-three-one []
   (let [info (atom {})]
@@ -64,10 +72,7 @@
          (fn [_ _ _] (session/global-put! :program-531 nil) nil)]
         [:button {:class "btn btn-default"
                   :type "submit"
-                  :onClick #(util/ajax-post info
-                                            "/programs/five-three-one"
-                                            #_(.log js/console "hi") program-handler
-                                            program-error-handler)}
+                  :onClick #(get-program info)}
          "Calculate"]]
        (when (session/global-state :program-531)
          [program-tables])])))

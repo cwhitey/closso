@@ -42,7 +42,8 @@
         complete (generate rms fto-routine)]
     (timbre/info rms)
     (timbre/info complete)
-    complete))
+    {:status 200
+     :body complete}))
 
 ; test stuff
 (def test-lists
