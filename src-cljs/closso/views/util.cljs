@@ -35,20 +35,24 @@
               (for [[k label] items]
                 [:button.btn.btn-default {:key k} label])]))
 
-(defn table [column-names info conf]
+(defn table
+  "column-names: supplied as array
+  info: supplied as an array where each element is a new row
+  conf: can be e.g. {:class 'table table-striped'}"
+  [column-names info conf]
   [:div [:table conf
          [:thead
           (into [:tr] (for [data column-names]
                         [:th data]))]
          (into [:tbody] (for [row info]
                           (into [:tr] (for [data row]
-                                        [:td data]))))]])
+                                        [:td (str data)]))))]])
 
 (defn ajax-post
   [info url handler & error-handler]
   (if (not-empty @info)
     (do
-      (.log js/console "Posting  " @info " to " url)
+      (.log js/console "Posting  " (pr-str @info) " to " url)
       (POST url
             (conj {:params {:transit @info}
                    :handler handler

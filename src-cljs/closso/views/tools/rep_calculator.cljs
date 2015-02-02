@@ -16,7 +16,7 @@
            :handler (fn [_] (session/global-put! :saved? true))})))
 
 (defn rep-handler [response]
-  (.log js/console "Resp: " response)
+  (.log js/console "Resp: " (pr-str response))
   (session/global-put! :rep-calc response))
 
 (defn rep-error-handler [x]

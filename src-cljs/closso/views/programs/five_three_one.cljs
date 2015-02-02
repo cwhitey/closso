@@ -30,29 +30,32 @@
   (map (fn [[weight reps]] (str weight " x " reps)) week))
 
 (defn get-training-week-from-data [data week]
-  (map (fn [[k v]] (let [week (get v week)
-                         sets (get-sets-from-week week)]
-                     (conj [k] sets))) data))
+  (map (fn [[k v]] (let [gen-week (get v (- week 1))
+                         sets (get-sets-from-week gen-week)
+                         training-week (into [(name k)] sets)]
+                     (.log js/console (str "Week" week ":" (pr-str
+                                                            training-week)))
+                     training-week)) data))
 
 (defn program-tables []
   (let [data (session/global-state :program-531)]
-    [:h2 "Squats"]
-
-    ;; [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
-    ;;  (get-training-week-from-data data 1)
-    ;;  {:class "table table-striped"}]
-    ;; [:h2 "Week 2"]
-    ;; [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
-    ;;  (get-training-week-from-data data 2)
-    ;;  {:class "table table-striped"}]
-    ;; [:h2 "Week 3"]
-    ;; [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
-    ;;  (get-training-week-from-data data 3)
-    ;;  {:class "table table-striped"}]
-    ;; [:h2 "Week 4 (Deload)"]
-    ;; [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
-    ;;  (get-training-week-from-data data 4)
-    ;;  {:class "table table-striped"}]
+    [:div
+     [:h2 "Week 1"]
+     [:div [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+            (get-training-week-from-data data 1)
+            {:class "table table-striped"}]]
+     [:h2 "Week 2"]
+     [:div [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+            (get-training-week-from-data data 2)
+            {:class "table table-striped"}]]
+     [:h2 "Week 3"]
+     [:div [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+            (get-training-week-from-data data 3)
+            {:class "table table-striped"}]]
+     [:h2 "Week 4 (Deload)"]
+     [:div [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
+            (get-training-week-from-data data 4)
+            {:class "table table-striped"}]]]
     ))
 
 (defn get-program [info]
