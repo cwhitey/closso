@@ -35,7 +35,7 @@
   (map (fn [[k v]] (let [gen-week (get v (- week 1))
                          sets (get-sets-from-week gen-week)
                          training-week (into [(capitalize (name k))] sets)]
-                     (.log js/console (str "Week" week ":" (pr-str
+                     (.log js/console (str "Week" week ": " (pr-str
                                                             training-week)))
                      training-week)) data))
 
@@ -57,8 +57,7 @@
      [:h2 "Week 4 (Deload)"]
      [:div [util/table ["Exercises" "Set 1" "Set 2" "Set 3"]
             (get-training-week-from-data data 4)
-            {:class "table table-striped"}]]]
-    ))
+            {:class "table table-striped"}]]]))
 
 (defn get-program [info]
   (util/ajax-post info

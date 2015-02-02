@@ -76,7 +76,7 @@
                               :externs ["react/externs/react.js"],
                               :optimizations :none,
                               :output-to "resources/public/js/app.js",
-                              :source-map true,
+                              :source-map "resources/public/js/out.js.map",
                               :pretty-print true}}}}
 
   :clean-targets ^{:protect false} ["resources/public/js/out"]
