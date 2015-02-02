@@ -8,13 +8,6 @@
 
 (def capitalize #(clojure.string/capitalize %))
 
-(defn program-handler [response]
-  (.log js/console "Resp: " (pr-str response))
-  (session/global-put! :program-531 response))
-
-(defn program-error-handler [x]
-  (.log js/console (str "five-three-one: something bad happened: " x)))
-
 (def form (util/form [[:legend "Squat"]
                       [:div.col-md-6 (util/text-input :squat.reps "Reps" :numeric "1 - 12")]
                       [:div.col-md-6 (util/text-input :squat.weight "Weight" :numeric)]
@@ -43,7 +36,7 @@
                                                             training-week)))
                      training-week)) data))
 
-(defn program-tables
+(defn generate-tables
   "Generate tables for the program, using the response from backend"
   []
   (let [data (session/global-state :program-531)]
@@ -54,11 +47,18 @@
                      (get-training-week-from-data data c)
                      {:class "table table-striped"}]]))))
 
+(defn post-handler [response]
+  (.log js/console "Resp: " (pr-str response))
+  (session/global-put! :program-531 response))
+
+(defn post-error-handler [x]
+  (.log js/console (str "five-three-one: something bad happened: " x)))
+
 (defn get-program [info]
   (util/ajax-post info
                   "/programs/five-three-one"
-                  program-handler
-                  program-error-handler))
+                  post-handler
+                  post-error-handler))
 
 (defn five-three-one []
   (let [info (atom {})]
@@ -74,4 +74,4 @@
                   :onClick #(get-program info)}
          "Calculate"]]
        (when (session/global-state :program-531)
-         [program-tables])])))
+         [generate-tables])])))
