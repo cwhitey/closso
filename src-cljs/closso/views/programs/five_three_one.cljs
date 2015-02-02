@@ -26,13 +26,15 @@
                       [:div.col-md-6 (util/text-input :overhead-press.reps "Reps" :numeric "1 - 12")]
                       [:div.col-md-6 (util/text-input :overhead-press.weight "Weight" :numeric)]]))
 
+(def capitalize #(clojure.string/capitalize %))
+
 (defn get-sets-from-week [week]
   (map (fn [[weight reps]] (str weight " x " reps)) week))
 
 (defn get-training-week-from-data [data week]
   (map (fn [[k v]] (let [gen-week (get v (- week 1))
                          sets (get-sets-from-week gen-week)
-                         training-week (into [(name k)] sets)]
+                         training-week (into [(capitalize (name k))] sets)]
                      (.log js/console (str "Week" week ":" (pr-str
                                                             training-week)))
                      training-week)) data))
