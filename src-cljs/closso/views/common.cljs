@@ -46,4 +46,7 @@
        [:a {:href "#/contact"} "Contact"]]]
      [:ul.nav.navbar-nav.navbar-right
       [:li
-       [:button.btn.btn-default.navbar-btn.disabled "Sign in"]]]]]])
+       [:div.btn-group.navbar-btn
+        [:a.btn.btn-default.disabled "Sign in"]
+        [:a.btn.btn-default {:href "https://github.com/cwhitey/closso"}
+         [:span.fa.fa-github-alt "  Contribute"]]]]]]]])
