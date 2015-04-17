@@ -10,9 +10,9 @@
 
 (defn get-context [request]
   (if-let [context (:servlet-context request)]
-             (try
-               (.getContextPath context)
-               (catch IllegalArgumentException _ context))))
+    (try
+      (.getContextPath context)
+      (catch IllegalArgumentException _ context))))
 
 ;; We want to return a RenderableTemplate object here so that Compojure can pass us the request
 (deftype
@@ -23,11 +23,9 @@
     [this request]
     (content-type
      (->>
-      (conj
-       params
-       {:dev             (env :dev)
-        :servlet-context (get-context request)
-        :user-id         (session/get :user-id)})
+      (conj params {:dev             (env :dev)
+                    :servlet-context (get-context request)
+                    :user-id         (session/get :user-id)})
       (template-fn)
       response)
      "text/html; charset=utf-8")))

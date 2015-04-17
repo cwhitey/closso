@@ -6,7 +6,7 @@
   :url "http://localhost:3000/"
 
   :dependencies [[com.novemberain/monger "2.0.1"]
-                 [log4j
+                 #_[log4j
                   "1.2.17"
                   :exclusions
                   [javax.mail/mail

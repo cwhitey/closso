@@ -11,8 +11,9 @@
 ;; Wave D. Deload: 60% x 5, 65% x 5, 70% x 5
 
 ;; Format:
-;; [[<week1> [<set1> perc reps] [<set2> perc reps] [<set3> perc reps]]
-;;  [<week2> ...]]
+;; [[<wave1> [<set1> perc reps] [<set2> perc reps] [<set3> perc reps]]
+;;  [<wave2> ...]]
+
 (def fto-routine
   [[[0.75 5][0.8  5][0.85 5]]
    [[0.8  3][0.85 3][0.9  3]]
@@ -37,17 +38,13 @@
   [one-rms routine]
   (map-vals one-rms #(transform-routine % routine)))
 
-(defn five-three-one [lifts]
+(defn generate-five-three-one [lifts]
   (let [rms (get-one-rms lifts)
         complete (generate rms fto-routine)]
     (timbre/info rms)
     (timbre/info complete)
-    {:status 200
-     :body complete}))
+    complete))
 
-; test stuff
-(def test-lists
-  {:squat          {:reps 1, :weight 100}
-   :deadlift       {:reps 2, :weight 200}
-   :bench-press    {:reps 3, :weight 300}
-   :overhead-press {:reps 4, :weight 400}})
+(defn five-three-one [lifts]
+  {:status 200
+   :body (generate-five-three-one lifts)})
