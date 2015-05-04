@@ -6,13 +6,6 @@
   :url "http://localhost:3000/"
 
   :dependencies [[com.novemberain/monger "2.0.1"]
-                 #_[log4j
-                  "1.2.17"
-                  :exclusions
-                  [javax.mail/mail
-                   javax.jms/jms
-                   com.sun.jdmk/jmxtools
-                   com.sun.jmx/jmxri]]
                  [selmer "0.7.9"]
                  [hiccup "1.0.5"]
                  [com.taoensso/tower "3.0.2"]
@@ -43,40 +36,41 @@
             [lein-cljsbuild "1.0.4"]
             [hiccup-bridge "1.0.1"]
             [lein-figwheel "0.2.0-SNAPSHOT"]
-            [lein-bikeshed "0.2.0"]]
+            [lein-bikeshed "0.2.0"]
+            [speclj "3.2.0"]]
 
-  :ring {:handler closso.handler/app,
-         :init closso.handler/init,
+  :test-paths ["spec"]
+
+  :ring {:handler closso.handler/app
+         :init closso.handler/init
          :destroy closso.handler/destroy}
 
   :profiles {:uberjar {:cljsbuild
-                       {:jar true,
+                       {:jar true
                         :builds {:app
-                                 {:source-paths ["env/prod/cljs"],
-                                  :compiler {:optimizations :advanced, :false pretty-print}}}},
-                       :hooks [leiningen.cljsbuild],
-                       :omit-source true,
-                       :env {:production true},
-                       :aot :all},
+                                 {:source-paths ["env/prod/cljs"]
+                                  :compiler {:optimizations :advanced, :false pretty-print}}}}
+                       :hooks [leiningen.cljsbuild]
+                       :omit-source true
+                       :env {:production true}
+                       :aot :all}
              :production {:ring
-                          {:open-browser? false, :stacktraces? false, :auto-reload? false}},
-             :dev {:cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}},
+                          {:open-browser? false, :stacktraces? false, :auto-reload? false}}
+             :dev {:cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}}
                    :dependencies [[ring-mock "0.1.5"]
                                   [ring/ring-devel "1.3.2"]
-                                  [pjstadig/humane-test-output "0.6.0"]],
+                                  [speclj "3.2.0"]]
                    :plugins [[com.cemerick/austin "0.1.6"]]
-                   :injections [(require 'pjstadig.humane-test-output)
-                                (pjstadig.humane-test-output/activate!)],
                    :env {:dev true}
                    :resource-paths ["resources/"]}}
 
-  :cljsbuild {:builds {:app {:source-paths ["src-cljs"],
+  :cljsbuild {:builds {:app {:source-paths ["src-cljs"]
                              :compiler
-                             {:output-dir "resources/public/js/out",
-                              :externs ["react/externs/react.js"],
-                              :optimizations :none,
-                              :output-to "resources/public/js/app.js",
-                              :source-map "resources/public/js/out.js.map",
+                             {:output-dir "resources/public/js/out"
+                              :externs ["react/externs/react.js"]
+                              :optimizations :none
+                              :output-to "resources/public/js/app.js"
+                              :source-map "resources/public/js/out.js.map"
                               :pretty-print true}}}}
 
   :clean-targets ^{:protect false} ["resources/public/js/out"]

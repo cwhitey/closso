@@ -13,6 +13,7 @@
             [ring.middleware.defaults :refer [site-defaults]]
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
+            [selmer.parser :as parser]
             [environ.core :refer [env]]
             [cronj.core :as cronj]))
 
