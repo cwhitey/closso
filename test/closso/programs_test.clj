@@ -1,14 +1,15 @@
-(ns closso.test.five-three-one
-  (:require [closso.programs.five-three-one :refer :all]
-            [clojure.test :refer :all]))
+(ns closso.programs-test
+  (:require [closso.programs.five-three-one :as fto])
+  (:use expectations))
 
-(def test-data1
+
+(def fto-data1
   {:squat          {:reps 1, :weight 100}
    :deadlift       {:reps 2, :weight 200}
    :bench-press    {:reps 3, :weight 300}
    :overhead-press {:reps 4, :weight 400}})
 
-(def test-data1-result
+(def fto-data1-result
   {:bench-press    [[[238 5] [254 5] [270 5]]
                     [[254 3] [270 3] [286 3]]
                     [[238 5] [270 3] [302 1]]
@@ -26,6 +27,6 @@
                     [[327 5] [371 3] [415 1]]
                     [[262 5] [284 5] [305 5]]]})
 
-(deftest generated-lifts
-  (is (= (generate-five-three-one test-data1)
-         test-data1-result)))
+;; five three one
+(expect fto-data1-result
+        (fto/generate-five-three-one fto-data1))

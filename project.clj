@@ -5,7 +5,8 @@
 
   :url "http://localhost:3000/"
 
-  :dependencies [[com.novemberain/monger "2.0.1"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [com.novemberain/monger "2.0.1"]
                  [selmer "0.7.9"]
                  [hiccup "1.0.5"]
                  [com.taoensso/tower "3.0.2"]
@@ -26,6 +27,8 @@
                  [org.flatland/useful "0.11.3"]
                  [com.cemerick/piggieback "0.1.5"]]
 
+  :test-paths ["test"]
+
   :repl-options {:init-ns closso.repl}
 
   :jvm-opts ["-server"]
@@ -37,9 +40,7 @@
             [hiccup-bridge "1.0.1"]
             [lein-figwheel "0.2.0-SNAPSHOT"]
             [lein-bikeshed "0.2.0"]
-            [speclj "3.2.0"]]
-
-  :test-paths ["spec"]
+            [lein-expectations "0.0.7"]]
 
   :ring {:handler closso.handler/app
          :init closso.handler/init
@@ -54,12 +55,16 @@
                        :omit-source true
                        :env {:production true}
                        :aot :all}
+
              :production {:ring
                           {:open-browser? false, :stacktraces? false, :auto-reload? false}}
              :dev {:cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}}
                    :dependencies [[ring-mock "0.1.5"]
                                   [ring/ring-devel "1.3.2"]
-                                  [speclj "3.2.0"]]
+                                  [pjstadig/humane-test-output "0.7.0"]
+                                  [expectations "2.0.9"]]
+                   :injections [(require 'pjstadig.humane-test-output)
+                                (pjstadig.humane-test-output/activate!)]
                    :plugins [[com.cemerick/austin "0.1.6"]]
                    :env {:dev true}
                    :resource-paths ["resources/"]}}
