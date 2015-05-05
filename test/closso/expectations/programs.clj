@@ -1,4 +1,4 @@
-(ns closso.programs-test
+(ns closso.expectations.programs
   (:require [closso.programs.five-three-one :as fto])
   (:use expectations))
 
@@ -30,3 +30,4 @@
 ;; five three one
 (expect fto-data1-result
         (fto/generate-five-three-one fto-data1))
+(expect 1 2)

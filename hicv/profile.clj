@@ -1,3 +1,4 @@
+
 ([:html
   [:body
    "{% extends \"templates/base.html\" %}\n{% block menu %}\n{% endblock %}\n{% block content %}\n  "

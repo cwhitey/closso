@@ -1,4 +1,4 @@
-(ns closso.handler-test
+(ns closso.expectations.handler
   (:use expectations
         ring.mock.request
         closso.handler))
