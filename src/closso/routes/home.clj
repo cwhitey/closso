@@ -10,8 +10,6 @@
                       [clojure.pprint :refer [pprint]]
                       [taoensso.timbre :as timbre]))
 
-
-
 (defn base []
   (layout/render base/base {:title "Loading..."}))
 
