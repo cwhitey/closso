@@ -15,11 +15,13 @@
                9 [76 77]
                10 [75 75 70]
                11 [72]
-               12 [70 67 65]
-               15 [65 60]})
+               12 [70 67 65]})
 
 (defn get-one-rm [reps weight]
   (/ weight (- 1.0278 (* 0.0278 reps))))
+
+#_(defn get-one-rm [reps weight]
+  (util/perc (util/avg (rep-data reps))))
 
 (defn get-rep-vals
   [one-rm]

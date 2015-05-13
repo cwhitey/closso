@@ -33,7 +33,7 @@
 (defn rep-table-fill []
   (sort-by first (if (session/global-state :rep-calc)
                    (session/global-state :rep-calc)
-                   (map (fn [x] [x ""]) (conj (range 1 13) 15)))))
+                   (map (fn [x] [x ""]) (range 1 13)))))
 
 (defn rep-calculator []
   (let [info (atom {})]
