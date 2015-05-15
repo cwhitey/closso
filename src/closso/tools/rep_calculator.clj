@@ -18,10 +18,9 @@
                12 [70 67 65]})
 
 (defn get-one-rm [reps weight]
-  (/ weight (- 1.0278 (* 0.0278 reps))))
-
-#_(defn get-one-rm [reps weight]
-  (util/perc (util/avg (rep-data reps))))
+  (let [perc (util/perc (util/avg (rep-data reps)))
+        one-rm (* weight (+ 1 (- 1 perc)))]
+    (float one-rm)))
 
 (defn get-rep-vals
   [one-rm]

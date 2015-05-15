@@ -1,7 +1,6 @@
-(ns closso.expectations.programs
-  (:require [closso.programs.five-three-one :as fto])
-  (:use expectations))
-
+(ns closso.expectations.programs.five-three-one
+  (:require [closso.programs.five-three-one :as fto]
+            [expectations :refer :all]))
 
 (def fto-data1
   {:squat          {:reps 1, :weight 100}
@@ -10,7 +9,7 @@
    :overhead-press {:reps 4, :weight 400}})
 
 (def fto-data1-result
-  {:bench-press    [[[238 5] [254 5] [270 5]]
+  {:bench-press    [[[245 5] [262 5] [278 5]]
                     [[254 3] [270 3] [286 3]]
                     [[238 5] [270 3] [302 1]]
                     [[191 5] [206 5] [222 5]]],
@@ -27,6 +26,18 @@
                     [[327 5] [371 3] [415 1]]
                     [[262 5] [284 5] [305 5]]]})
 
-;; five three one
-(expect fto-data1-result
+(expect {:test 1.0}
+        (fto/get-one-rms {:test {:reps 1, :weight 1}}))
+
+(expect {:test  1.0
+         :test2 2.0}
+        (fto/get-one-rms {:test  {:reps 1, :weight 1}
+                          :test2 {:reps 1, :weight 2}}))
+
+(expect {:test  57.0
+         :test2 (float 79.6)}
+        (fto/get-one-rms {:test  {:reps 5,  :weight 50}
+                          :test2 {:reps 12, :weight 60}}))
+
+#_(expect fto-data1-result
         (fto/generate-five-three-one fto-data1))
