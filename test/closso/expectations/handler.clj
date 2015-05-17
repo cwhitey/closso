@@ -3,7 +3,7 @@
             [expectations :refer :all]
             [peridot.core :as req]))
 
-; endpoints
+; basic endpoints
 (let [response (-> (req/session h/app)
                    (req/request "/")
                    :response)]

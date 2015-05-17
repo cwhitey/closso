@@ -10,3 +10,7 @@ pom.xml
 /.env
 *.log
 /.repl
+/.nrepl-port
+/.lein-env
+/.lein-failures
+/.lein-repl-history

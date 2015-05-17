@@ -22,12 +22,15 @@
   (if (< 12 reps)
     (throw+ {:type :reps-too-high})
     (let [perc (util/perc (util/avg (rep-data reps)))
-          one-rm (* weight (+ 1 (- 1 perc)))]
+          one-rm (* weight (inc (- 1 perc)))]
       one-rm)))
 
 (defn get-rep-vals
   [one-rm]
-  (map (fn [[k v]] [k (Math/round (* one-rm (util/perc (util/avg v))))]) rep-data))
+  (timbre/debug (str "get-rep-vals one-rm param: " one-rm))
+  (let [get-avg (fn [vals] (util/perc (util/avg vals)))]
+    (map (fn [[reps avg-vals]] [reps (Math/round (double (* one-rm (get-avg avg-vals))))])
+         rep-data)))
 
 (defn rep-calculator [reps weight]
   (get-rep-vals (get-one-rm reps weight)))

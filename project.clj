@@ -8,26 +8,29 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2665"]
                  [com.novemberain/monger "2.0.1"]
-                 [selmer "0.7.9"]
+                 [selmer "0.8.2"]
                  [hiccup "1.0.5"]
-                 [com.taoensso/tower "3.0.2"]
-                 [reagent-forms "0.3.9"]
+
                  [prone "0.8.1"]
-                 [markdown-clj "0.9.62" :exclusions [com.keminglabs/cljx]]
+                 [markdown-clj "0.9.66" :exclusions [com.keminglabs/cljx]]
                  [im.chit/cronj "1.4.3"]
-                 [com.taoensso/timbre "3.3.1"]
-                 [cljs-ajax "0.3.8"]
-                 [noir-exception "0.2.3"]
-                 [lib-noir "0.9.5"]
+                 [com.taoensso/timbre "3.4.0" :exclusions [org.clojure/tools.reader]]
+                 [noir-exception "0.2.5"]
+                 [lib-noir "0.9.9"]
                  [environ "1.0.0"]
                  [ring-server "0.4.0"]
-                 [secretary "1.2.1"]
-                 [figwheel "0.2.0-SNAPSHOT"]
+                 [figwheel "0.3.2"]
                  [org.flatland/useful "0.11.3"]
                  [slingshot "0.12.2"]
                  [peridot "0.4.0"]
                  [cheshire "5.4.0"]
-                 [metosin/ring-http-response "0.6.1"]]
+                 [metosin/ring-http-response "0.6.1"]
+
+                 ;;cljs
+                 [secretary "1.2.3"]
+                 [cljs-ajax "0.3.11"]
+                 [reagent-forms "0.5.1"]
+                 ]
 
   :test-paths ["test"]
 
@@ -61,7 +64,7 @@
              :dev {:cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}}
                    :dependencies [[ring-mock "0.1.5"]
                                   [ring/ring-devel "1.3.2"]
-                                  [expectations "2.0.9"]]
+                                  [expectations "2.1.1"]]
                    :plugins [[com.cemerick/austin "0.1.6"]]
                    :env {:dev true}
                    :resource-paths ["resources/"]}}
