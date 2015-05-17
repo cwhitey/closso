@@ -10,7 +10,7 @@
   [:div.navbar.navbar-default.navbar-fixed-top
    [:div.container
     [:div.navbar-header
-     [:a.navbar-brand {:href "#/"} "Closso"]]
+     [:a.navbar-brand {:href "#/"} "power" [:sup "2"]]]
     [:div.navbar-collapse.collapse
      [:ul.nav.navbar-nav
       [:li.dropdown
