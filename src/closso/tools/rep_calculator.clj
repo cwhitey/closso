@@ -1,34 +1,33 @@
 (ns closso.tools.rep-calculator
   (:require [closso.util :as util]
-            [taoensso.timbre :as timbre]))
+            [taoensso.timbre :as timbre]
+            [slingshot.slingshot :refer [throw+]]))
 
 ;info drawn from http://www.exrx.net/Calculators/OneRepMax.html
 
-(def rep-data {1 [100]
-               2 [95 95 92]
-               3 [90 93 90]
-               4 [88 90 87]
-               5 [86 87 85]
-               6 [83 85 82]
-               7 [80 83]
-               8 [78 80 75]
-               9 [76 77]
+(def rep-data {1  [100]
+               2  [95 95 92]
+               3  [90 93 90]
+               4  [88 90 87]
+               5  [86 87 85]
+               6  [83 85 82]
+               7  [80 83]
+               8  [78 80 75]
+               9  [76 77]
                10 [75 75 70]
                11 [72]
                12 [70 67 65]})
 
 (defn get-one-rm [reps weight]
-  (let [perc (util/perc (util/avg (rep-data reps)))
-        one-rm (* weight (+ 1 (- 1 perc)))]
-    (float one-rm)))
+  (if (< 12 reps)
+    (throw+ {:type :reps-too-high})
+    (let [perc (util/perc (util/avg (rep-data reps)))
+          one-rm (* weight (+ 1 (- 1 perc)))]
+      one-rm)))
 
 (defn get-rep-vals
   [one-rm]
   (map (fn [[k v]] [k (Math/round (* one-rm (util/perc (util/avg v))))]) rep-data))
 
 (defn rep-calculator [reps weight]
-  (if (< 12 reps)
-    {:status 400
-     :body "Reps can only be 1-12."}
-    {:status 200
-     :body (get-rep-vals (get-one-rm reps weight))}))
+  (get-rep-vals (get-one-rm reps weight)))

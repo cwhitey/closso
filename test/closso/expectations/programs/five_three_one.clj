@@ -26,18 +26,59 @@
                     [[327 5] [371 3] [415 1]]
                     [[262 5] [284 5] [305 5]]]})
 
-(expect {:test 1.0}
+; Multiple one rep maxes
+(expect {:test 1}
         (fto/get-one-rms {:test {:reps 1, :weight 1}}))
 
-(expect {:test  1.0
-         :test2 2.0}
+(expect {:test  1
+         :test2 2}
         (fto/get-one-rms {:test  {:reps 1, :weight 1}
                           :test2 {:reps 1, :weight 2}}))
 
-(expect {:test  57.0
-         :test2 (float 79.6)}
+(expect {:test  57
+         :test2 398/5}
         (fto/get-one-rms {:test  {:reps 5,  :weight 50}
                           :test2 {:reps 12, :weight 60}}))
+
+; Weeks
+(expect [[10 1]]
+        (fto/transform-week 100 [[0.1 1]]))
+
+(expect [[10 1][10 1][10 1]]
+        (fto/transform-week 100 [[0.1 1][0.1 1][0.1 1]]))
+
+(expect [[10 10][10 11][10 12]]
+        (fto/transform-week 100 [[0.1 10][0.1 11][0.1 12]]))
+
+(expect [[75 1][80 3][85 5]]
+        (fto/transform-week 100 [[0.75 1][0.8 3][0.85 5]]))
+
+; Routines
+(expect [[[10 1]]]
+        (fto/transform-routine 100 [[[0.1 1]]]))
+
+;; Multiple weeks in routine
+(expect [[[10 1]]
+         [[10 1]]
+         [[10 1]]]
+        (fto/transform-routine 100 [[[0.1 1]]
+                                    [[0.1 1]]
+                                    [[0.1 1]]]))
+
+;; Uneven weeks
+(expect [[[10 1][10 1][10 1]]
+         [[10 1]]
+         [[10 1]]]
+        (fto/transform-routine 100 [[[0.1 1][0.1 1][0.1 1]]
+                                    [[0.1 1]]
+                                    [[0.1 1]]]))
+
+(expect [[[10 1][10 1][10 1]]
+         [[10 1][10 1][10 1]]
+         [[10 1][10 1][10 1]]]
+        (fto/transform-routine 100 [[[0.1 1][0.1 1][0.1 1]]
+                                    [[0.1 1][0.1 1][0.1 1]]
+                                    [[0.1 1][0.1 1][0.1 1]]]))
 
 #_(expect fto-data1-result
         (fto/generate-five-three-one fto-data1))

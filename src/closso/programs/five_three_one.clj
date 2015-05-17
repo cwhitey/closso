@@ -38,13 +38,9 @@
   [one-rms routine]
   (map-vals one-rms #(transform-routine % routine)))
 
-(defn generate-five-three-one [lifts]
+(defn five-three-one [lifts]
   (let [rms (get-one-rms lifts)
         complete (generate rms fto-routine)]
     (timbre/info rms)
     (timbre/info complete)
     complete))
-
-(defn five-three-one [lifts]
-  {:status 200
-   :body (generate-five-three-one lifts)})

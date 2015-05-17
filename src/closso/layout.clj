@@ -14,11 +14,9 @@
       (catch IllegalArgumentException _ context))))
 
 ;; We want to return a RenderableTemplate object here so that Compojure can pass us the request
-(deftype
-    RenderableTemplate
-    [template-fn params]
-
+(deftype RenderableTemplate [template-fn params]
   Renderable
+
   (render
     [this request]
     (content-type

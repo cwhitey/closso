@@ -13,6 +13,7 @@
     [:div.container
      [:div.row-fluid
       [:div#app
+       ;; Displayed until the cljs 'app' loads:
        [:p "Loading..."]]]
 
      [:div.row-fluid

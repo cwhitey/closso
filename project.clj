@@ -24,7 +24,10 @@
                  [secretary "1.2.1"]
                  [figwheel "0.2.0-SNAPSHOT"]
                  [org.flatland/useful "0.11.3"]
-                 [com.cemerick/piggieback "0.1.5"]]
+                 [slingshot "0.12.2"]
+                 [peridot "0.4.0"]
+                 [cheshire "5.4.0"]
+                 [metosin/ring-http-response "0.6.1"]]
 
   :test-paths ["test"]
 
@@ -34,11 +37,9 @@
 
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
-            [lein-ancient "0.5.5"]
             [lein-cljsbuild "1.0.4"]
             [hiccup-bridge "1.0.1"]
             [lein-figwheel "0.2.0-SNAPSHOT"]
-            [lein-bikeshed "0.2.0"]
             [lein-expectations "0.0.7"]]
 
   :ring {:handler closso.handler/app
