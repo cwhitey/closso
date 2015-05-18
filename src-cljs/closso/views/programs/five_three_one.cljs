@@ -32,17 +32,20 @@
   (map (fn [[k v]] (let [gen-week (get v (- week 1))
                          sets (get-sets-from-week gen-week)
                          training-week (into [(capitalize (name k))] sets)]
-                     (.log js/console (str "Week" week ": " (pr-str
-                                                            training-week)))
-                     training-week)) data))
+                     (.log js/console (str "Week" week ": " (pr-str training-week)))
+                     training-week))
+       data))
 
+
+;;TODO refactor this shiznit and add another table which displays the new
+;; 1RM's for the user
 (defn generate-tables
   "Generate tables for the program, using the response from backend"
   []
   (let [data (session/global-state :program-531)]
     (into [:div] (for [c (range 1 5)]
                    [:div
-                    [:h2 (str "Wave " c (when (= c 4) " (deload)"))]
+                    [:h2 (str "Week " c (when (= c 4) " (deload)"))]
                     [util/table ["Workouts" "Set 1" "Set 2" "Set 3"]
                      (get-training-week-from-data data c)
                      {:class "table table-striped"}]]))))

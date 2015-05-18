@@ -17,7 +17,9 @@
 
 ;; Playing with Schema
 (def day-schema [(s/one Double "percentage") (s/one s/Int "reps")])
-(s/explain day-schema)
+(def routine-schema [[day-schema]])
+
+(s/explain routine-schema)
 ;(def week-schema (into [] (repeat 3 day-schema)))
 
 ;(def routine-schema (into [] (repeat 4 week-schema)))
