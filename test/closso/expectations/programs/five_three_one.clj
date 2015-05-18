@@ -1,6 +1,7 @@
 (ns closso.expectations.programs.five-three-one
   (:require [closso.programs.five-three-one :as fto]
-            [expectations :refer :all]))
+            [expectations :refer :all]
+            [schema.core :as s]))
 
 (def fto-data1
   {:squat          {:reps 1, :weight 100}
@@ -28,17 +29,21 @@
 
 ; Multiple one rep maxes
 (expect {:test 1}
-        (fto/get-one-rms {:test {:reps 1, :weight 1}}))
+        (fto/get-one-rms {:test {:reps 1 :weight 1}}))
 
 (expect {:test  1
          :test2 2}
-        (fto/get-one-rms {:test  {:reps 1, :weight 1}
-                          :test2 {:reps 1, :weight 2}}))
+        (fto/get-one-rms {:test  {:reps 1 :weight 1}
+                          :test2 {:reps 1 :weight 2}}))
 
 (expect {:test  57
          :test2 398/5}
-        (fto/get-one-rms {:test  {:reps 5,  :weight 50}
-                          :test2 {:reps 12, :weight 60}}))
+        (fto/get-one-rms {:test  {:reps 5  :weight 50}
+                          :test2 {:reps 12 :weight 60}}))
+
+(expect Exception
+        (fto/get-one-rms {:test  {:reps 5  :weight 50}
+                          :test2 {}}))
 
 
 ; Weeks

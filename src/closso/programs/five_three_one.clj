@@ -1,7 +1,8 @@
 (ns closso.programs.five-three-one
   (:require [closso.tools.rep-calculator :refer [get-one-rm]]
             [flatland.useful.map :refer [map-vals]]
-            [taoensso.timbre :as timbre]))
+            [taoensso.timbre :as timbre]
+            [schema.core :as s]))
 
 
 ;;;;; Routine outline
@@ -14,14 +15,26 @@
 ;; [[<wave1> [<set1> perc reps] [<set2> perc reps] [<set3> perc reps]]
 ;;  [<wave2> ...]]
 
+;; Playing with Schema
+(def day-schema [(s/one Double "percentage") (s/one s/Int "reps")])
+(s/explain day-schema)
+;(def week-schema (into [] (repeat 3 day-schema)))
+
+;(def routine-schema (into [] (repeat 4 week-schema)))
+
 (def fto-routine
   [[[0.75 5][0.8  5][0.85 5]]
    [[0.8  3][0.85 3][0.9  3]]
    [[0.75 5][0.85 3][0.95 1]]
    [[0.6  5][0.65 5][0.7  5]]])
 
+(def one-rms-schema {s/Keyword {(s/required-key :reps)   s/Num
+                                (s/required-key :weight) s/Num}})
+
 (defn get-one-rms [lifts]
-  (map-vals lifts #(get-one-rm (:reps %) (:weight %))))
+  (let [validated-lifts (s/validate one-rms-schema lifts)]
+    (map-vals validated-lifts
+              #(get-one-rm (:reps %) (:weight %)))))
 
 (defn transform-week
   "Take a week in routine format and return the calculated weight and rep scheme"

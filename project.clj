@@ -10,7 +10,6 @@
                  [com.novemberain/monger "2.0.1"]
                  [selmer "0.8.2"]
                  [hiccup "1.0.5"]
-
                  [prone "0.8.1"]
                  [markdown-clj "0.9.66" :exclusions [com.keminglabs/cljx]]
                  [im.chit/cronj "1.4.3"]
@@ -19,24 +18,18 @@
                  [lib-noir "0.9.9"]
                  [environ "1.0.0"]
                  [ring-server "0.4.0"]
-                 [figwheel "0.3.2"]
+                 [figwheel "0.3.3"]
                  [org.flatland/useful "0.11.3"]
                  [slingshot "0.12.2"]
                  [peridot "0.4.0"]
                  [cheshire "5.4.0"]
                  [metosin/ring-http-response "0.6.1"]
+                 [prismatic/schema "0.4.2"]
 
                  ;;cljs
                  [secretary "1.2.3"]
                  [cljs-ajax "0.3.11"]
-                 [reagent-forms "0.5.1"]
-                 ]
-
-  :test-paths ["test"]
-
-  :repl-options {:init-ns closso.repl}
-
-  :jvm-opts ["-server"]
+                 [reagent-forms "0.5.1"]]
 
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
@@ -49,7 +42,18 @@
          :init closso.handler/init
          :destroy closso.handler/destroy}
 
-  :profiles {:uberjar {:cljsbuild
+  :profiles {:dev {:cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}}
+                   :dependencies [[ring-mock "0.1.5"]
+                                  [ring/ring-devel "1.3.2"]
+                                  [expectations "2.1.1"]]
+                   :plugins [[com.cemerick/austin "0.1.6"]]
+                   :env {:dev true}
+                   :resource-paths ["resources/"]}
+
+             :production {:ring
+                          {:open-browser? false, :stacktraces? false, :auto-reload? false}}
+
+             :uberjar {:cljsbuild
                        {:jar true
                         :builds {:app
                                  {:source-paths ["env/prod/cljs"]
@@ -57,17 +61,7 @@
                        :hooks [leiningen.cljsbuild]
                        :omit-source true
                        :env {:production true}
-                       :aot :all}
-
-             :production {:ring
-                          {:open-browser? false, :stacktraces? false, :auto-reload? false}}
-             :dev {:cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}}
-                   :dependencies [[ring-mock "0.1.5"]
-                                  [ring/ring-devel "1.3.2"]
-                                  [expectations "2.1.1"]]
-                   :plugins [[com.cemerick/austin "0.1.6"]]
-                   :env {:dev true}
-                   :resource-paths ["resources/"]}}
+                       :aot :all}}
 
   :cljsbuild {:builds {:app {:source-paths ["src-cljs"]
                              :compiler
@@ -78,8 +72,9 @@
                               :source-map "resources/public/js/out.js.map"
                               :pretty-print true}}}}
 
+  :repl-options {:init-ns closso.repl}
   :clean-targets ^{:protect false} ["resources/public/js/out"]
-
   :uberjar-name "closso.jar"
-
-  :min-lein-version "2.0.0")
+  :min-lein-version "2.0.0"
+  :test-paths ["test"]
+  :jvm-opts ["-server"])
