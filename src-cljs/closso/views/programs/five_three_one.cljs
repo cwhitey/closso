@@ -30,10 +30,10 @@
   "Pick out a single weeks worth of training from each key"
   [data week]
   (let-fn [format-week (let [gen-week (get v (- week 1))
-                         sets (get-sets-from-week gen-week)
-                         training-week (into [(capitalize (name k))] sets)]
-                     (.log js/console (str "Week" week ": " (pr-str training-week)))
-                     training-week)]
+                             sets (get-sets-from-week gen-week)
+                             training-week (into [(capitalize (name k))] sets)]
+                         (.log js/console (str "Week" week ": " (pr-str training-week)))
+                         training-week)]
           (map format-week data)))
 
 (defn generate-tables
@@ -65,6 +65,9 @@
             :type "submit"
             :onClick #(get-program info)}
    "Calculate"])
+
+(defn calculate-next-button []
+  [:button.btn.btn-default "Calculate next"])
 
 (defn five-three-one []
   (let [info (atom {})]
