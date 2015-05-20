@@ -29,16 +29,13 @@
 (defn get-training-week-from-data
   "Pick out a single weeks worth of training from each key"
   [data week]
-  (map (fn [[k v]] (let [gen-week (get v (- week 1))
+  (let-fn [format-week (let [gen-week (get v (- week 1))
                          sets (get-sets-from-week gen-week)
                          training-week (into [(capitalize (name k))] sets)]
                      (.log js/console (str "Week" week ": " (pr-str training-week)))
-                     training-week))
-       data))
+                     training-week)]
+          (map format-week data)))
 
-
-;;TODO refactor this shiznit and add another table which displays the new
-;; 1RM's for the user
 (defn generate-tables
   "Generate tables for the program, using the response from backend"
   []
@@ -63,6 +60,12 @@
                   post-handler
                   post-error-handler))
 
+(defn calculate-button [info]
+  [:button {:class "btn btn-default"
+            :type "submit"
+            :onClick #(get-program info)}
+   "Calculate"])
+
 (defn five-three-one []
   (let [info (atom {})]
     (fn []
@@ -72,9 +75,6 @@
        [:div.well
         [bind-fields form info
          (fn [_ _ _] (session/global-put! :program-531 nil) nil)]
-        [:button {:class "btn btn-default"
-                  :type "submit"
-                  :onClick #(get-program info)}
-         "Calculate"]]
+        [calculate-button info]]
        (when (session/global-state :program-531)
          [generate-tables])])))

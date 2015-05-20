@@ -6,11 +6,11 @@
   :url "http://localhost:3000/"
 
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2665"]
+                 [org.clojure/clojurescript "0.0-3291"]
                  [com.novemberain/monger "2.0.1"]
                  [selmer "0.8.2"]
                  [hiccup "1.0.5"]
-                 [prone "0.8.1"]
+                 [prone "0.8.2"]
                  [markdown-clj "0.9.66" :exclusions [com.keminglabs/cljx]]
                  [im.chit/cronj "1.4.3"]
                  [com.taoensso/timbre "3.4.0" :exclusions [org.clojure/tools.reader]]
@@ -29,6 +29,7 @@
                  ;;cljs
                  [secretary "1.2.3"]
                  [cljs-ajax "0.3.11"]
+                 [reagent "0.5.0"]
                  [reagent-forms "0.5.1"]]
 
   :plugins [[lein-ring "0.9.1"]
@@ -76,5 +77,5 @@
   :clean-targets ^{:protect false} ["resources/public/js/out"]
   :uberjar-name "closso.jar"
   :min-lein-version "2.0.0"
-  :test-paths ["test"]
+  :test-paths ["test" "test-cljs"]
   :jvm-opts ["-server"])
