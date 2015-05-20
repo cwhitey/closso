@@ -27,7 +27,14 @@
   (map (fn [[weight reps]] (str weight " x " reps)) week))
 
 (defn get-training-week-from-data
-  "Pick out a single weeks worth of training from each key"
+  "Pick out a single week when given a single exercise's weeks"
+  [exercise-weeks week]
+                                        ;TODO
+
+  )
+
+(defn get-training-weeks-from-data
+  "Pick out a single weeks worth of training from each exercise key"
   [data week]
   (let-fn [format-week (let [gen-week (get v (- week 1))
                              sets (get-sets-from-week gen-week)
@@ -44,7 +51,7 @@
                    [:div
                     [:h2 (str "Week " c (when (= c 4) " (deload)"))]
                     [util/table ["Workouts" "Set 1" "Set 2" "Set 3"]
-                     (get-training-week-from-data data c)
+                     (get-training-weeks-from-data data c)
                      {:class "table table-striped"}]]))))
 
 (defn post-handler [response]
@@ -66,8 +73,8 @@
             :onClick #(get-program info)}
    "Calculate"])
 
-(defn calculate-next-button []
-  [:button.btn.btn-default "Calculate next"])
+(def calculate-next-button
+  [:button.btn.btn-default {:type "submit" :onClick #()} "Calculate next"])
 
 (defn five-three-one []
   (let [info (atom {})]
