@@ -26,22 +26,25 @@
   [week]
   (map (fn [[weight reps]] (str weight " x " reps)) week))
 
-(defn get-training-week-from-data
+(defn get-week
   "Pick out a single week when given a single exercise's weeks"
   [exercise-weeks week]
-                                        ;TODO
+  (let [week-data (get exercise-weeks (- week 1))]
+    (get-sets-from-week week-data)))
 
-  )
+(defn format-exercise-week
+  [exercise-name week]
+  (let [formatted-exercise-week (into [(capitalize (name exercise-name))] week)]
 
-(defn get-training-weeks-from-data
+    formatted-exercise-week))
+
+(defn get-week-from-all-exercises
   "Pick out a single weeks worth of training from each exercise key"
   [data week]
-  (let-fn [format-week (let [gen-week (get v (- week 1))
-                             sets (get-sets-from-week gen-week)
-                             training-week (into [(capitalize (name k))] sets)]
-                         (.log js/console (str "Week" week ": " (pr-str training-week)))
-                         training-week)]
-          (map format-week data)))
+  (let [log-week #(.log js/console (str "Training week " week ": " (pr-str %)))] ;
+    (map (fn [[k v]] (let [week (format-exercise-week k (get-week v week))]
+                       (log-week week)
+                       data)))))
 
 (defn generate-tables
   "Generate tables for the program, using the response from backend"
@@ -51,7 +54,7 @@
                    [:div
                     [:h2 (str "Week " c (when (= c 4) " (deload)"))]
                     [util/table ["Workouts" "Set 1" "Set 2" "Set 3"]
-                     (get-training-weeks-from-data data c)
+                     (get-week-from-all-exercises data c)
                      {:class "table table-striped"}]]))))
 
 (defn post-handler [response]

@@ -43,35 +43,36 @@
          :init closso.handler/init
          :destroy closso.handler/destroy}
 
-  :profiles {:dev {:cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]}}}
-                   :dependencies [[ring-mock "0.1.5"]
-                                  [ring/ring-devel "1.3.2"]
-                                  [expectations "2.1.1"]]
-                   :plugins [[com.cemerick/austin "0.1.6"]]
-                   :env {:dev true}
-                   :resource-paths ["resources/"]}
+  :profiles {:dev        {:cljsbuild      {:builds {:app {:source-paths ["env/dev/cljs"]}}}
+                          :dependencies   [[ring-mock "0.1.5"]
+                                           [ring/ring-devel "1.3.2"]
+                                           [expectations "2.1.1"]]
+                          :plugins        [[com.cemerick/austin "0.1.6"]]
+                          :env            {:dev true}
+                          :resource-paths ["resources/"]}
 
              :production {:ring
                           {:open-browser? false, :stacktraces? false, :auto-reload? false}}
 
-             :uberjar {:cljsbuild
-                       {:jar true
-                        :builds {:app
-                                 {:source-paths ["env/prod/cljs"]
-                                  :compiler {:optimizations :advanced, :false pretty-print}}}}
-                       :hooks [leiningen.cljsbuild]
-                       :omit-source true
-                       :env {:production true}
-                       :aot :all}}
+             :uberjar    {:cljsbuild
+                          {:jar true
+                           :builds {:app
+                                    {:source-paths ["env/prod/cljs"]
+                                     :compiler     {:optimizations :advanced, :false pretty-print}}}}
+                          :hooks       [leiningen.cljsbuild]
+                          :omit-source true
+                          :env         {:production true}
+                          :aot         :all}}
 
-  :cljsbuild {:builds {:app {:source-paths ["src-cljs"]
-                             :compiler
-                             {:output-dir "resources/public/js/out"
-                              :externs ["react/externs/react.js"]
-                              :optimizations :none
-                              :output-to "resources/public/js/app.js"
-                              :source-map "resources/public/js/out.js.map"
-                              :pretty-print true}}}}
+  :cljsbuild {:builds [{:id           "app"
+                        :source-paths ["src-cljs"]
+                        :compiler
+                        {:output-dir    "resources/public/js/out"
+                         :externs       ["react/externs/react.js"]
+                         :optimizations :none
+                         :output-to     "resources/public/js/app.js"
+                         :source-map    "resources/public/js/out.js.map"
+                         :pretty-print  true}}]}
 
   :repl-options {:init-ns closso.repl}
   :clean-targets ^{:protect false} ["resources/public/js/out"]
