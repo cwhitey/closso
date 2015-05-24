@@ -30,7 +30,7 @@
    info
    {:class "table table-striped"}])
 
-(defn rep-table-fill []
+(defn rep-table-blank-fill []
   (sort-by first (if (session/global-state :rep-calc)
                    (session/global-state :rep-calc)
                    (map (fn [x] [x ""]) (range 1 13)))))
@@ -52,4 +52,4 @@
                                                              rep-handler
                                                              rep-error-handler)}
           "Calculate"]]]
-       [:div.col-md-6 [rep-table (rep-table-fill)]]])))
+       [:div.col-md-6 [rep-table (rep-table-blank-fill)]]])))

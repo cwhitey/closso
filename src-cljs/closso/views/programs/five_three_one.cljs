@@ -33,10 +33,9 @@
     (get-sets-from-week week-data)))
 
 (defn format-exercise-week
+  "Format exericse name for a week"
   [exercise-name week]
-  (let [formatted-exercise-week (into [(capitalize (name exercise-name))] week)]
-
-    formatted-exercise-week))
+  (into [(capitalize (name exercise-name))] week))
 
 (defn get-week-from-all-exercises
   "Pick out a single weeks worth of training from each exercise key"
@@ -44,7 +43,8 @@
   (let [log-week #(.log js/console (str "Training week " week ": " (pr-str %)))] ;
     (map (fn [[k v]] (let [week (format-exercise-week k (get-week v week))]
                        (log-week week)
-                       data)))))
+                       week))
+         data)))
 
 (defn generate-tables
   "Generate tables for the program, using the response from backend"
@@ -77,7 +77,7 @@
    "Calculate"])
 
 (def calculate-next-button
-  [:button.btn.btn-default {:type "submit" :onClick #()} "Calculate next"])
+  [:button.btn.btn-default {:type "submit" :onClick #(.log (str "da buttoon waz cliacked"))} "Calculate next"])
 
 (defn five-three-one []
   (let [info (atom {})]
