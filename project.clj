@@ -34,14 +34,16 @@
 
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
-            [lein-cljsbuild "1.0.4"]
+            [lein-cljsbuild "1.0.5"]
             [hiccup-bridge "1.0.1"]
-            [lein-figwheel "0.2.0-SNAPSHOT"]
+            [lein-figwheel "0.3.3"]
             [lein-expectations "0.0.7"]]
+
 
   :ring {:handler closso.handler/app
          :init closso.handler/init
          :destroy closso.handler/destroy}
+
 
   :profiles {:dev        {:cljsbuild      {:builds {:app {:source-paths ["env/dev/cljs"]}}}
                           :dependencies   [[ring-mock "0.1.5"]
@@ -49,7 +51,8 @@
                                            [expectations "2.1.1"]]
                           :plugins        [[com.cemerick/austin "0.1.6"]]
                           :env            {:dev true}
-                          :resource-paths ["resources/"]}
+                          :resource-paths ["resources/"]
+                          :node-dependencies [[source-map-support "^0.2.9"]]}
 
              :production {:ring
                           {:open-browser? false, :stacktraces? false, :auto-reload? false}}
@@ -58,21 +61,32 @@
                           {:jar true
                            :builds {:app
                                     {:source-paths ["env/prod/cljs"]
-                                     :compiler     {:optimizations :advanced, :false pretty-print}}}}
+                                     :compiler     {:optimizations :advanced
+                                                    :false pretty-print}}}}
                           :hooks       [leiningen.cljsbuild]
                           :omit-source true
                           :env         {:production true}
                           :aot         :all}}
 
-  :cljsbuild {:builds [{:id           "app"
-                        :source-paths ["src-cljs"]
-                        :compiler
-                        {:output-dir    "resources/public/js/out"
-                         :externs       ["react/externs/react.js"]
-                         :optimizations :none
-                         :output-to     "resources/public/js/app.js"
-                         :source-map    "resources/public/js/out.js.map"
-                         :pretty-print  true}}]}
+
+  :cljsbuild {:builds
+              {:app          {:source-paths ["src-cljs"]
+                              :compiler     {:externs       ["react/externs/react.js"]
+                                             :optimizations :none
+                                             :output-to     "resources/public/js/app.js"
+                                             :source-map    "resources/public/js/out.js.map"
+                                             :pretty-print  true}}
+
+               :expectations {:source-paths   ["test-cljs"]
+                              :notify-command ["node" "resources/public/js/my-expectations.js"]
+                              :compiler       {:target         :nodejs
+                                               :main           closso.expectations.core
+                                               :output-to      "resources/public/js/my-expectations.js"
+                                               :optimizations  :none
+                                               :cache-analysis true
+                                               :source-map     true
+                                               :pretty-print   true}}}}
+
 
   :repl-options {:init-ns closso.repl}
   :clean-targets ^{:protect false} ["resources/public/js/out"]
