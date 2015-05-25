@@ -34,9 +34,9 @@
 
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
-            [lein-cljsbuild "1.0.5"]
+            [lein-cljsbuild "1.0.4"]
             [hiccup-bridge "1.0.1"]
-            [lein-figwheel "0.3.3"]
+            [lein-figwheel "0.2.0-SNAPSHOT"]
             [lein-expectations "0.0.7"]]
 
 
@@ -71,7 +71,8 @@
 
   :cljsbuild {:builds
               {:app          {:source-paths ["src-cljs"]
-                              :compiler     {:externs       ["react/externs/react.js"]
+                              :compiler     {:output-dir    "resources/public/js/out"
+                                             :externs       ["react/externs/react.js"]
                                              :optimizations :none
                                              :output-to     "resources/public/js/app.js"
                                              :source-map    "resources/public/js/out.js.map"
