@@ -40,12 +40,14 @@
     (include-js "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
 
     (if (:dev contents)
+      ;; Dev
       (for [x  [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.js")
                 (include-js "js/out/goog/base.js")
                 (include-js "js/app.js")
                 [:script {:type "text/javascript"}
                          "goog.require(\"closso.app\");"]]]
         x)
+      ;; Prod
       (for [x [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.min.js")
                (include-js "js/app.js")]]
         x))]))
