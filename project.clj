@@ -32,12 +32,15 @@
                  [reagent "0.5.0"]
                  [reagent-forms "0.5.1"]]
 
-  :plugins [[lein-ring "0.9.1"]
-            [lein-environ "1.0.0"]
-            [lein-cljsbuild "1.0.5"]
-            [hiccup-bridge "1.0.1"]
-            [lein-figwheel "0.3.3"]  ; [lein-figwheel "0.2.0-SNAPSHOT"]
-            [lein-expectations "0.0.7"]]
+  :plugins [[lein-ring                       "0.9.1"]
+            [lein-environ                    "1.0.0"]
+            [lein-cljsbuild                  "1.0.5"]
+            [hiccup-bridge                   "1.0.1"]
+            [lein-figwheel                   "0.3.3"]  ; [lein-figwheel "0.2.0-SNAPSHOT"]
+            [lein-expectations               "0.0.7"]
+            [lein-autoexpect                 "1.4.3"]
+            [com.cemerick/clojurescript.test "0.3.3"]  ; for cljsbuild test-commands
+            ]
 
 
   :ring {:handler closso.handler/app
@@ -78,16 +81,20 @@
                                                      :source-map    "resources/public/js/out.js.map"
                                                      :pretty-print  true}}
 
-                       :expectations {:source-paths   ["test-cljs"]
+                       :expectations {:source-paths   ["src-cljs" "test-cljs"]
                                       :notify-command ["node" "./resources/public/js/my-expectations.js"]
-                                      :compiler       {:target         :nodejs
-                                                       :main           closso.expectations.core
+                                      :compiler       {:output-to      "resources/public/js/my-expectations.js"
                                                        :output-dir     "resources/public/js/expectations"
-                                                       :output-to      "resources/public/js/my-expectations.js"
-                                                       :optimizations  :none
+                                                       :source-map     "resources/public/js/my-expectations.js.map"
+                                                       :main           "closso.expectations.core"
+                                                       :target         :nodejs
+                                                       :optimizations  :simple
                                                        :cache-analysis true
-                                                       :source-map     true
-                                                       :pretty-print   true}}}}
+                                                       :pretty-print   true
+                                                       :hashbang       false}}}
+              :test-commands {"node"       ["node" :node-runner "resources/public/js/my-expectations.js"]
+                              ;; "phantom" ["phantomjs" :runner "resources/public/js/my-expectations.js"]
+                              }}
 
 
   :repl-options {:init-ns closso.repl}
