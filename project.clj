@@ -5,8 +5,8 @@
 
   :url "http://localhost:3000/"
 
-  :dependencies [[org.clojure/clojure "1.7.0-beta3"] ;[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-3291"] ;[org.clojure/clojurescript "0.0-2665"]
+  :dependencies [[org.clojure/clojure "1.7.0-RC1"] ;[org.clojure/clojure "1.6.0"]
+                 [org.clojure/clojurescript "0.0-3269"] ;[org.clojure/clojurescript "0.0-2665"]
                  [com.novemberain/monger "2.0.1"]
                  [selmer "0.8.2"]
                  [hiccup "1.0.5"]
@@ -27,6 +27,7 @@
                  [prismatic/schema "0.4.2"]
 
                  ;;cljs
+                 [com.cemerick/clojurescript.test "0.3.3"]
                  [secretary "1.2.3"]
                  [cljs-ajax "0.3.11"]
                  [reagent "0.5.0"]
@@ -44,14 +45,14 @@
 
 
   :ring {:handler closso.handler/app
-         :init closso.handler/init
+         :init    closso.handler/init
          :destroy closso.handler/destroy}
 
 
   :profiles {:dev        {:cljsbuild      {:builds {:app {:source-paths ["env/dev/cljs"]}}}
-                          :dependencies   [[ring-mock "0.1.5"]
+                          :dependencies   [[ring-mock       "0.1.5"]
                                            [ring/ring-devel "1.3.2"]
-                                           [expectations "2.1.1"]]
+                                           [expectations    "2.1.1"]]
                           :plugins        [[com.cemerick/austin "0.1.6"]]
                           :env            {:dev true}
                           :resource-paths ["resources/"]
@@ -74,32 +75,37 @@
 
   :cljsbuild {:builds {:app          {:source-paths ["src-cljs"]
                                       :figwheel     true
-                                      :compiler     {:output-dir    "resources/public/js/out"
+                                      :compiler     {:output-to     "resources/public/js/app/app.js"
+                                                     :output-dir    "resources/public/js/app"
+                                                     :source-map    "resources/public/js/app/app.js.map"
                                                      :externs       ["react/externs/react.js"]
                                                      :optimizations :none
-                                                     :output-to     "resources/public/js/app.js"
-                                                     :source-map    "resources/public/js/out.js.map"
                                                      :pretty-print  true}}
 
                        :expectations {:source-paths   ["src-cljs" "test-cljs"]
-                                      :notify-command ["node" "./resources/public/js/my-expectations.js"]
-                                      :compiler       {:output-to      "resources/public/js/my-expectations.js"
-                                                       :output-dir     "resources/public/js/expectations"
-                                                       :source-map     "resources/public/js/my-expectations.js.map"
+                                      :compiler       {:output-to      "resources/public/js/tests/my-expectations.js"
+                                                       :output-dir     "resources/public/js/tests"
+                                                       :source-map     "resources/public/js/tests/my-expectations.js.map"
                                                        :main           "closso.expectations.core"
-                                                       :target         :nodejs
-                                                       :optimizations  :simple
-                                                       :cache-analysis true
-                                                       :pretty-print   true
-                                                       :hashbang       false}}}
-              :test-commands {"node"       ["node" :node-runner "resources/public/js/my-expectations.js"]
-                              ;; "phantom" ["phantomjs" :runner "resources/public/js/my-expectations.js"]
-                              }}
+                                                       :optimizations  :whitespace
+                                                       :pretty-print   true}
+                                      ;; :notify-command ["node" "./resources/public/js/tests/my-expectations.js"]
+                                      }}
+              :test-commands {;; "node"       ["node" :node-runner "resources/public/js/tests/my-expectations.js"]
+                              "phantom" ["phantomjs"
+                                         :runner
+                                         "window.literal_js_was_evaluated=true"
+                                         "resources/public/js/tests/my-expectations.js"]
+                              }
+              }
 
 
   :repl-options {:init-ns closso.repl}
-  :clean-targets ^{:protect false} ["resources/public/js/out"]
+  :clean-targets ^{:protect false} [[:cljsbuild :builds :app          :compiler :output-to]
+                                    [:cljsbuild :builds :app          :compiler :output-dir]
+                                    [:cljsbuild :builds :expectations :compiler :output-to]
+                                    [:cljsbuild :builds :expectations :compiler :output-dir]]
   :uberjar-name "closso.jar"
   :min-lein-version "2.0.0"
-  :test-paths ["test" "test-cljs"]
+  :test-paths ["test"]
   :jvm-opts ["-server"])
