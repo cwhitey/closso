@@ -6,14 +6,8 @@
 
 (session/global-put! :rep-calc nil)
 
-#_(defn save-doc
-  "use Ajax to hit the /save endpoint on the backend"
-  [doc]
-  (fn []
-    (.log js/console "Doc: " @doc)
-    (POST "/save"
-          {:params {:doc @doc}
-           :handler (fn [_] (session/global-put! :saved? true))})))
+(def form (util/form [(util/text-input :reps "Reps" :numeric "1 - 12")
+                      (util/text-input :weight "Weight" :numeric)]))
 
 (defn rep-handler [response]
   (.log js/console "Resp: " (pr-str response))
@@ -22,18 +16,19 @@
 (defn rep-error-handler [x]
   (.log js/console (str "rep-calc: something bad happened: " x)))
 
-(def form (util/form [(util/text-input :reps "Reps" :numeric "1 - 12")
-                      (util/text-input :weight "Weight" :numeric)]))
-
 (defn rep-table [info]
   [util/table ["Reps" "Weight"]
    info
    {:class "table table-striped"}])
 
-(defn rep-table-blank-fill []
-  (sort-by first (if (session/global-state :rep-calc)
-                   (session/global-state :rep-calc)
-                   (map (fn [x] [x ""]) (range 1 13)))))
+(defn rep-data-format
+  "Format rep data passed in. If data is invalid, return blank data."
+  ;TODO use prismatic/schema
+  ([data] (rep-data-format data 1))
+  ([data max-reps]
+   (sort-by first (if data
+                    data
+                    (map (fn [x] [x ""]) (range 1 (inc max-reps)))))))
 
 (defn rep-calculator []
   (let [info (atom {})]
@@ -52,4 +47,4 @@
                                                              rep-handler
                                                              rep-error-handler)}
           "Calculate"]]]
-       [:div.col-md-6 [rep-table (rep-table-blank-fill)]]])))
+       [:div.col-md-6 [rep-table (rep-data-format (session/global-state :rep-calc) 12)]]])))

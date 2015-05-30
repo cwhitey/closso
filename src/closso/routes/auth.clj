@@ -63,8 +63,6 @@
             (resp/empty))
         (resp/status 401 (resp/empty))))))
 
-
-
 (defn logout []
   (session/clear!)
   (resp/redirect "/"))

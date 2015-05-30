@@ -5,22 +5,16 @@
 ## Prerequisites
 
  1. You will need [Leiningen][1] 2.0 or above installed.
- 2. You will need [MongoDB][2] installed.
 
 [1]: https://github.com/technomancy/leiningen
-[2]: https://www.mongodb.org/downloads
 
 ## Running
-
-Start MongoDB:
-
-    sudo mongod
 
 To compile the cljs, run:
 
     lein cljsbuild once
 
-Or, to auto-compile after saves, run:
+Or, to auto-compile after file saves, run:
 
     lein cljsbuild auto
 
@@ -43,7 +37,14 @@ In another terminal, run:
     lein ring server
 
 Now after updating any ClojureScript you just have to reload your browser to
-pull in the changes!
+pull in the changes.
+
+### Run Clojurescript tests
+
+Requirements: phantomjs v2+
+
+    lein cljsbuild test
+
 
 Start a ClojureScript REPL from a Clojure REPL
 

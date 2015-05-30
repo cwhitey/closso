@@ -21,10 +21,17 @@
                       [:div.col-md-6 (util/text-input :overhead-press.reps "Reps" :numeric "1 - 12")]
                       [:div.col-md-6 (util/text-input :overhead-press.weight "Weight" :numeric)]]))
 
+(defn stringify-set
+  "Sweet short circuiting, man"
+  [weight reps]
+  (and weight
+       reps
+       (str weight " x " reps)))
+
 (defn get-sets-from-week
   "Stringify sets"
   [week]
-  (map (fn [[weight reps]] (str weight " x " reps)) week))
+  (map (fn [[weight reps]] (stringify-set weight reps)) week))
 
 (defn get-week
   "Pick out a single week when given a single exercise's weeks"

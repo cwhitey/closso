@@ -2,6 +2,8 @@
   (:require-macros #_[expectations.cljs :as e])
   (:require #_[expectations]
             [cemerick.cljs.test :as t] ; Necessary for `lein cljsbuild test` calls
+            [closso.expectations.tools.rep-calculator]
+            [closso.expectations.programs.five-three-one]
             [closso.expectations.my-test]))
 
 (defn -main []

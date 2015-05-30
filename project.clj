@@ -35,7 +35,7 @@
 
   :plugins [[lein-ring                       "0.9.1"]
             [lein-environ                    "1.0.0"]
-            [lein-cljsbuild                  "1.0.5"]
+            [lein-cljsbuild                  "1.0.6"]
             [hiccup-bridge                   "1.0.1"]
             [lein-figwheel                   "0.3.3"]  ; [lein-figwheel "0.2.0-SNAPSHOT"]
             [lein-expectations               "0.0.7"]
@@ -53,7 +53,8 @@
                           :dependencies   [[ring-mock       "0.1.5"]
                                            [ring/ring-devel "1.3.2"]
                                            [expectations    "2.1.1"]]
-                          :plugins        [[com.cemerick/austin "0.1.6"]]
+                          :plugins        [[lein-shell "0.4.0"]
+                                           #_[com.cemerick/austin "0.1.6"]]
                           :env            {:dev true}
                           :resource-paths ["resources/"]
                           :node-dependencies [[source-map-support "^0.2.9"]]}
@@ -62,49 +63,58 @@
                           {:open-browser? false, :stacktraces? false, :auto-reload? false}}
 
              :uberjar    {:cljsbuild
-                          {:jar true
+                          {:jar    true
                            :builds {:app
                                     {:source-paths ["env/prod/cljs"]
                                      :compiler     {:optimizations :advanced
-                                                    :false pretty-print}}}}
+                                                    :false         pretty-print}}}}
                           :hooks       [leiningen.cljsbuild]
                           :omit-source true
                           :env         {:production true}
                           :aot         :all}}
 
 
-  :cljsbuild {:builds {:app          {:source-paths ["src-cljs"]
-                                      :figwheel     true
-                                      :compiler     {:output-to     "resources/public/js/app/app.js"
-                                                     :output-dir    "resources/public/js/app"
-                                                     :source-map    "resources/public/js/app/app.js.map"
-                                                     :externs       ["react/externs/react.js"]
-                                                     :optimizations :none
-                                                     :pretty-print  true}}
+  :cljsbuild {:builds {:app   {:source-paths ["src-cljs"]
+                               :figwheel     true
+                               :compiler     {:output-to     "resources/public/js/app/app.js"
+                                              :output-dir    "resources/public/js/app"
+                                              :source-map    "resources/public/js/app/app.js.map"
+                                              :externs       ["react/externs/react.js"]
+                                              :optimizations :none
+                                              :pretty-print  true}}
 
-                       :expectations {:source-paths   ["src-cljs" "test-cljs"]
-                                      :compiler       {:output-to      "resources/public/js/tests/my-expectations.js"
-                                                       :output-dir     "resources/public/js/tests"
-                                                       :source-map     "resources/public/js/tests/my-expectations.js.map"
-                                                       :main           "closso.expectations.core"
-                                                       :optimizations  :whitespace
-                                                       :pretty-print   true}
-                                      ;; :notify-command ["node" "./resources/public/js/tests/my-expectations.js"]
-                                      }}
-              :test-commands {;; "node"       ["node" :node-runner "resources/public/js/tests/my-expectations.js"]
-                              "phantom" ["phantomjs"
-                                         :runner
-                                         "window.literal_js_was_evaluated=true"
-                                         "resources/public/js/tests/my-expectations.js"]
-                              }
-              }
+                       :tests {:source-paths   ["src-cljs" "test-cljs"]
+                               :notify-command ["phantomjs"
+                                                :cljs.test/runner
+                                                "resources/public/js/tests/my-tests.js"]
+                               :compiler       {:output-to      "resources/public/js/tests/my-tests.js"
+                                                :output-dir     "resources/public/js/tests"
+                                                :source-map     "resources/public/js/tests/my-tests.js.map"
+                                                :main           "closso.expectations.core"
+                                                :optimizations  :whitespace
+                                                :pretty-print   true}}}}
 
+  :aliases {"test-all"       ["do"
+                              "shell" "echo" "RUNNING CLOJURE TESTS,"
+                              "clean,"
+                              "with-profile" "dev"
+                              "expectations,"
+                              "shell" "echo" "RUNNING CLOJURESCRIPT TESTS,"
+                              "cljsbuild" "once" "tests"]
+            "test-cljs"      ["do"
+                              "clean,"
+                              "with-profile" "dev"
+                              "cljsbuild" "once" "tests"]
+            "auto-test-cljs" ["do"
+                              "clean,"
+                              "with-profile" "dev"
+                              "cljsbuild" "auto" "tests"]}
 
   :repl-options {:init-ns closso.repl}
   :clean-targets ^{:protect false} [[:cljsbuild :builds :app          :compiler :output-to]
                                     [:cljsbuild :builds :app          :compiler :output-dir]
-                                    [:cljsbuild :builds :expectations :compiler :output-to]
-                                    [:cljsbuild :builds :expectations :compiler :output-dir]]
+                                    [:cljsbuild :builds :tests :compiler :output-to]
+                                    [:cljsbuild :builds :tests :compiler :output-dir]]
   :uberjar-name "closso.jar"
   :min-lein-version "2.0.0"
   :test-paths ["test"]
