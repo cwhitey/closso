@@ -28,3 +28,4 @@
 
 ; TODO figure out how to mock out the functionality of clicking the button
 ; send back a response to the ajax post
+; Possibly use this: https://github.com/semperos/clj-webdriver

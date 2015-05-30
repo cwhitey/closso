@@ -1,4 +1,5 @@
 (ns closso.handler
+  (:import org.eclipse.jetty.server.Server)
   (:require [compojure.core :refer [defroutes]]
             [closso.routes.home :refer [home-routes]]
             [closso.middleware :refer [load-middleware]]
@@ -8,9 +9,11 @@
             [closso.layout :as layout]
             [closso.templates.base :as base]
             [closso.templates.notfound :as nf]
+            [com.stuartsierra.component :as component]
             [noir.response :refer [redirect]]
             [noir.util.middleware :refer [app-handler]]
             [ring.middleware.defaults :refer [site-defaults]]
+            [ring.adapter.jetty :as jetty]
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
             [selmer.parser :as parser]
@@ -59,3 +62,27 @@
    :ring-defaults (mk-defaults false)
    :access-rules  []
    :formats       [:json-kw :edn :transit-json]))
+
+
+(defrecord Web [app]
+  component/Lifecycle
+
+  (start [component]
+    (if (:server component)
+      component
+      (do
+        (init)
+        (let [options (-> component (dissoc :app) (assoc :join? false))
+              server  (jetty/run-jetty (:handler app) options)]
+          (assoc component :server server)))))
+
+  (stop [component]
+    (destroy)
+    (if-let [^Server server (:server component)]
+      (do (.stop server)
+          (.join server)
+          (dissoc component :server))
+      component)))
+
+(defn new-web [options]
+  (map->Web options))
