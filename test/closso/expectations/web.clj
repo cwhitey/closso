@@ -1,15 +1,15 @@
-(ns closso.expectations.handler
-  (:require [closso.handler :as h]
+(ns closso.expectations.web
+  (:require [closso.web :as web]
             [expectations :refer :all]
             [peridot.core :as req]))
 
 ; basic endpoints
-(let [response (-> (req/session h/app)
+(let [response (-> (req/session web/handler)
                    (req/request "/")
                    :response)]
   (expect 200 (:status response)))
 
-(let [response (-> (req/session h/app)
+(let [response (-> (req/session web/handler)
                    (req/request "/invalid-web-url")
                    :response)]
   (expect 404 (:status response)))

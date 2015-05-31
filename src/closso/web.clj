@@ -1,4 +1,4 @@
-(ns closso.handler
+(ns closso.web
   (:import org.eclipse.jetty.server.Server)
   (:require [compojure.core :refer [defroutes]]
             [closso.routes.home :refer [home-routes]]
@@ -19,6 +19,8 @@
             [selmer.parser :as parser]
             [environ.core :refer [env]]
             [cronj.core :as cronj]))
+
+;;TODO Clean up dependencies
 
 (defroutes base-routes
   (route/resources "/")
@@ -55,7 +57,7 @@
    (update-in [:session] merge session-defaults)
    (assoc-in [:security :anti-forgery] xss-protection?)))
 
-(def app
+(def handler
  (app-handler
    [auth-routes home-routes base-routes]
    :middleware    (load-middleware)
@@ -81,8 +83,7 @@
     (if-let [^Server server (:server component)]
       (do (.stop server)
           (.join server)
-          (dissoc component :server))
-      component)))
+          (dissoc component :server)))))
 
 (defn new-web [options]
   (map->Web options))

@@ -1,7 +1,9 @@
 (ns closso.repl
-  (:use closso.handler
+  (:use closso.web
         ring.server.standalone
         [ring.middleware file-info file]))
+
+;TODO use reloaded workflow
 
 (defonce server (atom nil))
 

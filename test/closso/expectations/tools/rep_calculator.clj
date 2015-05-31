@@ -1,6 +1,6 @@
 (ns closso.expectations.tools.rep-calculator
   (:require [closso.tools.rep-calculator :as rep]
-            [closso.handler :as h]
+            [closso.web :as web]
             [peridot.core :as req]
             [expectations :refer :all]
             [cheshire.core :refer [generate-string] :as json]))
@@ -16,7 +16,7 @@
 (expect Exception (rep/get-one-rm 13 1))
 
 ; Test web interface
-(let [response (-> (req/session h/app)
+(let [response (-> (req/session web/handler)
                    (req/content-type "application/json")
                    (req/request "/tools/rep-calc"
                                 :request-method :post
@@ -24,7 +24,7 @@
                    :response)]
   (expect 200 (:status response)))
 
-(let [response (-> (req/session h/app)
+(let [response (-> (req/session web/handler)
                    (req/content-type "application/json")
                    (req/request "/tools/rep-calc"
                                 :request-method :post

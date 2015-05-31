@@ -34,9 +34,15 @@
 (defrecord Db [instance]
   component/Lifecycle
 
-  (start [_])
+  (start [component]
+    ;; Tries to get the Mongo URI from the environment variable
+    ;; MONGOHQ_URL, otherwise default it to localhost
+    (let [uri (get (System/getenv) "MONGOHQ_URL" "mongodb://127.0.0.1/closso")
+        {:keys [conn db]} (mg/connect-via-uri uri)]
+      (assoc component :instance db)))
 
-  (stop [_])
+  (stop [component]
+    component)
 
   protocols/UserStorage
 
@@ -53,8 +59,4 @@
     (mc/find-one-as-map instance "users" {:id id})))
 
 (defn new-db []
-  ;; Tries to get the Mongo URI from the environment variable
-  ;; MONGOHQ_URL, otherwise default it to localhost
-  (let [uri (get (System/getenv) "MONGOHQ_URL" "mongodb://127.0.0.1/closso")
-        {:keys [conn db]} (mg/connect-via-uri uri)]
-    (Db. db)))
+  (Db. nil))

@@ -5,7 +5,7 @@
 
   :url "http://localhost:3000/"
 
-  :dependencies [[org.clojure/clojure "1.7.0-RC1"] ;[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.7.0-RC1"]
                  [org.clojure/clojurescript "0.0-3269"] ;[org.clojure/clojurescript "0.0-2665"]
                  [com.stuartsierra/component "0.2.3"]
                  [com.novemberain/monger "2.0.1"]
@@ -36,12 +36,6 @@
             [lein-environ   "1.0.0"]
             [lein-cljsbuild "1.0.6"]
             [hiccup-bridge  "1.0.1"]]
-
-
-  ;; :ring {:handler closso.handler/app
-  ;;        :init    closso.handler/init
-  ;;        :destroy closso.handler/destroy}
-
 
   :profiles {:dev        {:cljsbuild      {:builds {:app {:source-paths ["env/dev/cljs"]}}}
                           :dependencies   [[ring-mock       "0.1.5"]
@@ -111,6 +105,7 @@
                               "with-profile" "dev"
                               "cljsbuild" "auto" "tests"]}
 
+  :main closso.system
   :repl-options {:init-ns closso.repl}
   :clean-targets ^{:protect false} [[:cljsbuild :builds :app   :compiler :output-to]
                                     [:cljsbuild :builds :app   :compiler :output-dir]
