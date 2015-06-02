@@ -26,6 +26,7 @@ To clean up files created by the above commands, run:
 
     lein clean
 
+
 ## For Development
 
 Start figwheel to auto-compile and auto-push cljs/js to the browser:
@@ -39,12 +40,31 @@ In another terminal, run:
 Now after updating any ClojureScript you just have to reload your browser to
 pull in the changes.
 
-### Run Clojurescript tests
 
-Requirements: phantomjs v2+
+### Running tests
 
-    lein cljsbuild test
+Clojurescript test requirements: phantomjs v1.9.8+ (brew install phatomjs)
 
+Test everything:
+
+    lein test-all
+
+Clojurescript testing:
+
+    lein test-cljs
+    lein auto-test-cljs
+
+Backend testing:
+
+    lein expectations
+    lein autoexpect
+
+
+### REPL
+
+Clojure REPL:
+
+    lein repl
 
 Start a ClojureScript REPL from a Clojure REPL
 

@@ -14,3 +14,4 @@ pom.xml
 /.lein-env
 /.lein-failures
 /.lein-repl-history
+/*-init.clj
