@@ -101,13 +101,13 @@
                      ["shell" "echo" "RUNNING CLOJURESCRIPT TESTS"]
                      ["cljsbuild" "once" "tests"]]
    "test-cljs"      ["do"
-                     "clean,"
-                     "with-profile" "dev"
-                     "cljsbuild" "once" "tests"]
+                     ["clean"]
+                     ["with-profile" "dev"
+                      "cljsbuild" "once" "tests"]]
    "auto-test-cljs" ["do"
-                     "clean,"
-                     "with-profile" "dev"
-                     "cljsbuild" "auto" "tests"]}
+                     ["clean"]
+                     ["with-profile" "dev"
+                      "cljsbuild" "auto" "tests"]]}
 
   :main closso.system
   :repl-options {:init-ns closso.repl}
