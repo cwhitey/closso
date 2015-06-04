@@ -31,7 +31,8 @@
    [secretary "1.2.3"]
    [cljs-ajax "0.3.11"]
    [reagent "0.5.0"]
-   [reagent-forms "0.5.1"]]
+   [reagent-forms "0.5.1"]
+   [reagent-utils "0.1.4"]]
 
   :plugins
   [[lein-ring      "0.9.1"]
@@ -116,6 +117,6 @@
                                     [:cljsbuild :builds :tests :compiler :output-to]
                                     [:cljsbuild :builds :tests :compiler :output-dir]]
   :uberjar-name "closso.jar"
-  :min-lein-version "2.0.0"
+  :min-lein-version "2.5.0"
   :test-paths ["test"]
   :jvm-opts ["-server"])
