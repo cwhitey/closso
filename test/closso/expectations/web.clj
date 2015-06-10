@@ -1,9 +1,9 @@
 (ns closso.expectations.web
   (:require [closso.web :as web]
-            [closso.system :refer [get-system]]
+            [closso.system :refer :all]
             [expectations :refer :all]
             [peridot.core :as req]
-            [com.stuartsierra.component :refer [start-system]]
+            [com.stuartsierra.component :refer [start-system stop-system]]
             #_[clj-http.client :as client]))
 
 ;TODO mock out db
@@ -30,4 +30,4 @@
                    :response)]
   (expect 404 (:status response)))
 
-(stop @#'*the-system*)
+(stop-system @#'*the-system*)
