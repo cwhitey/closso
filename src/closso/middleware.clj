@@ -8,7 +8,7 @@
 
 (defn log-request [handler]
   (fn [req]
-    (timbre/debug req)
+    #_(timbre/debug req)
     (handler req)))
 
 (def development-middleware

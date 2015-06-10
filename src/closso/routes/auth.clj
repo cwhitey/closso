@@ -1,17 +1,17 @@
 (ns closso.routes.auth
   (:use compojure.core)
   (:require [closso.layout :as layout]
+            [closso.protocols :refer :all]
             [noir.session :as session]
             [noir.response :as resp]
             [noir.validation :as vali]
-            [noir.util.crypt :as crypt]
-            [closso.db.core :as db])
+            [noir.util.crypt :as crypt])
   (:import javax.xml.bind.DatatypeConverter))
 
-(defn valid? [id pass pass1]
+(defn valid? [db id pass pass1]
   (vali/rule (vali/has-value? id)
              [:id "user ID is required"])
-  (vali/rule (not (db/get-user id))
+  (vali/rule (not (get-user db id))
              [:id "duplicated user ID"])
   (vali/rule (vali/min-length? pass 5)
              [:pass "password must be at least 5 characters"])
@@ -27,11 +27,11 @@
      :pass-error (vali/on-error :pass first)
      :pass1-error (vali/on-error :pass1 first)}))
 
-(defn handle-registration [id pass pass1]
-  (if (valid? id pass pass1)
+(defn handle-registration [db id pass pass1]
+  (if (valid? db id pass pass1)
     (try
       (do
-        (db/create-user {:id id :pass (crypt/encrypt pass)})
+        (create-user db {:id id :pass (crypt/encrypt pass)})
         (session/put! :user-id id)
         (resp/redirect "/"))
       (catch Exception ex
@@ -39,14 +39,14 @@
         (register)))
     (register id)))
 
-(defn profile []
+(defn profile [db]
   (layout/render
     "profile.html"
-    {:user (db/get-user (session/get :user-id))}))
+    {:user (get-user db (session/get :user-id))}))
 
-(defn update-profile [{:keys [first-name last-name email]}]
-  (db/update-user (session/get :user-id) first-name last-name email)
-  (profile))
+(defn update-profile [db {:keys [first-name last-name email]}]
+  (update-user db (session/get :user-id) first-name last-name email)
+  (profile db))
 
 (defn parse-creds [auth]
   (when-let [basic-creds (second (re-matches #"\QBasic\E\s+(.*)" auth))]
@@ -54,32 +54,34 @@
          (re-matches #"(.*):(.*)")
          rest)))
 
-(defn handle-login [auth]
+(defn handle-login [db auth]
   (when auth
     (let [[user pass] (parse-creds auth)
-          account (db/get-user user)]
+          account (get-user db user)]
       (if (and account (crypt/compare pass (:pass account)))
         (do (session/put! :user-id user)
             (resp/empty))
         (resp/status 401 (resp/empty))))))
 
+;TODO investigate this
 (defn logout []
   (session/clear!)
   (resp/redirect "/"))
 
-(defroutes auth-routes
-  (GET "/register" []
-       (register))
+(defn auth-routes [db-component]
+  (routes
+   (GET "/register" []
+        (register))
 
-  (POST "/register" [id pass pass1]
-        (handle-registration id pass pass1))
+   (POST "/register" [id pass pass1]
+         (handle-registration db-component id pass pass1))
 
-  (GET "/profile" [] (profile))
+   (GET "/profile" [] (profile))
 
-  (POST "/update-profile" {params :params} (update-profile params))
+   (POST "/update-profile" {params :params} (update-profile db-component params))
 
-  (GET "/login" req
-        (handle-login (get-in req [:headers "authorization"])))
+   (GET "/login" req
+        (handle-login db-component (get-in req [:headers "authorization"])))
 
-  (GET "/logout" []
-        (logout)))
+   (GET "/logout" []
+        (logout))))

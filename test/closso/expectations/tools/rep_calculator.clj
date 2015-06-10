@@ -16,7 +16,7 @@
 (expect Exception (rep/get-one-rm 13 1))
 
 ; Test web interface
-(let [response (-> (req/session web/handler)
+(let [response (-> (req/session (web/handler nil))
                    (req/content-type "application/json")
                    (req/request "/tools/rep-calc"
                                 :request-method :post
@@ -24,7 +24,7 @@
                    :response)]
   (expect 200 (:status response)))
 
-(let [response (-> (req/session web/handler)
+(let [response (-> (req/session (web/handler nil))
                    (req/content-type "application/json")
                    (req/request "/tools/rep-calc"
                                 :request-method :post

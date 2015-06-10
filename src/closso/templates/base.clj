@@ -41,13 +41,10 @@
 
     (if (:dev contents)
       ;; Dev
-      (for [x  [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.js")
-                (include-js "js/out/goog/base.js")
-                (include-js "js/app.js")
+      (for [x  [(include-js "js/app/goog/base.js")
+                (include-js "js/app/app.js")
                 [:script {:type "text/javascript"}
                          "goog.require(\"closso.app\");"]]]
         x)
       ;; Prod
-      (for [x [(include-js "//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react.min.js")
-               (include-js "js/app.js")]]
-        x))]))
+      (include-js "js/app/app.js"))]))

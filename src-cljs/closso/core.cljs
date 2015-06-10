@@ -24,6 +24,7 @@
 (defn init! []
   (session/global-put! :current-page (pages :home))
   (reagent/render-component [page-component]
-                            (.getElementById js/document "app")))
+                            (.getElementById js/document "app") ;Use element with id 'app'
+                            ))
 ;render this entire app (which gets compiled to "app.js" as defined in project.clj)
 ;'render-component' is the same as 'render'

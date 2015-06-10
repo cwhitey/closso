@@ -10,6 +10,7 @@
    [org.clojure/clojurescript "0.0-3269"] ;[org.clojure/clojurescript "0.0-2665"]
    [com.stuartsierra/component "0.2.3"]
    [com.novemberain/monger "2.0.1"]
+   [com.ashafa/clutch "0.4.0"]
    [selmer "0.8.2"]
    [hiccup "1.0.5"]
    [prone "0.8.2"]
@@ -26,6 +27,8 @@
    [cheshire "5.4.0"]
    [metosin/ring-http-response "0.6.1"]
    [prismatic/schema "0.4.2"]
+   #_[clj-http        "1.1.2"]
+
 
    ;;cljs
    [secretary "1.2.3"]
@@ -70,7 +73,6 @@
                 :env         {:production true}
                 :aot         :all}}
 
-
   :cljsbuild
   {:builds {:app   {:source-paths ["src-cljs"]
                     :figwheel     true
@@ -91,6 +93,10 @@
                                      :main          "closso.expectations.core"
                                      :optimizations :whitespace
                                      :pretty-print  true}}}}
+
+  :figwheel
+  {:server-port 3449
+   :repl false}
 
   :aliases
   {;; Tests

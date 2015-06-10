@@ -1,11 +1,11 @@
 (ns closso.web
   (:import org.eclipse.jetty.server.Server)
-  (:require [compojure.core :refer [defroutes]]
+  (:require [compojure.core :refer [defroutes routes]]
             [closso.routes.home :refer [home-routes]]
             [closso.middleware :refer [load-middleware]]
             [closso.session-manager :as session-manager]
             [closso.routes.auth :refer [auth-routes]]
-            [closso.logging :as log]
+            [closso.logging :as log-init]
             [closso.layout :as layout]
             [closso.templates.base :as base]
             [closso.templates.notfound :as nf]
@@ -15,7 +15,7 @@
             [ring.middleware.defaults :refer [site-defaults]]
             [ring.adapter.jetty :as jetty]
             [compojure.route :as route]
-            [taoensso.timbre :as timbre]
+            [taoensso.timbre :as log]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
             [cronj.core :as cronj]))
@@ -31,21 +31,19 @@
   "initialisation code.
    called once when app is deployed."
   []
-  (log/init)
-  (if (env :dev) (parser/cache-off!))
-  (cronj/start! session-manager/cleanup-job)
-  (timbre/info
-    "-=[Started successfully"
-    (when (env :dev) "using the development profile")
-    "]=-"))
+  #_(log-init/init)
+  (when (env :dev)
+    (parser/cache-off!)
+    (log/info "Using development profile"))
+  (cronj/start! session-manager/cleanup-job))
 
 (defn destroy
   "runs when the application shuts down.
   put any clean up code here."
   []
-  (timbre/info "Shutting down...")
+  (log/info "Shutting down...")
   (cronj/shutdown! session-manager/cleanup-job)
-  (timbre/info "Shutdown complete!"))
+  (log/info "Shutdown complete!"))
 
 (def session-defaults
  {:timeout (* 60 30), :timeout-response (redirect "/")})
@@ -57,33 +55,35 @@
    (update-in [:session] merge session-defaults)
    (assoc-in [:security :anti-forgery] xss-protection?)))
 
-(def handler
- (app-handler
-   [auth-routes home-routes base-routes]
+
+;TODO stop using noir (Can use latest version of Luminus for reference)
+(defn handler [db-component]
+  (app-handler
+   [(auth-routes db-component) home-routes base-routes]
    :middleware    (load-middleware)
    :ring-defaults (mk-defaults false)
    :access-rules  []
    :formats       [:json-kw :edn :transit-json]))
 
-
-(defrecord Web [app]
+(defrecord Web [db config]
   component/Lifecycle
 
   (start [component]
-    (if (:server component)
-      component
-      (do
-        (init)
-        (let [options (-> component (dissoc :app) (assoc :join? false))
-              server  (jetty/run-jetty (:handler app) options)]
-          (assoc component :server server)))))
+    (log/info "Starting Web component")
+    (log/info "Web config:" config)
+    (init)
+    (let [options (:options config)
+          handler (handler db)
+          server  (jetty/run-jetty handler options)]
+      (assoc component :server server)))
 
   (stop [component]
+    (log/info "Stopping Web component")
     (destroy)
     (if-let [^Server server (:server component)]
       (do (.stop server)
           (.join server)
           (dissoc component :server)))))
 
-(defn new-web [options]
-  (map->Web options))
+(defn new-web [config]
+  (Web. nil config))
