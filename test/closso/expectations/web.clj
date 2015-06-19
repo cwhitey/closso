@@ -15,6 +15,7 @@
 
 (def ^:dynamic *the-system* (test-app))
 
+;TODO hit actual endpoints
 #_(prn (client/get "http://www.google.com" #_"http://localhost:3000/"))
 
 
