@@ -6,21 +6,20 @@
             [com.stuartsierra.component :as component]))
 
 (defrecord Db [instance config]
-  component/Lifecycle
 
+  component/Lifecycle
   (start [component]
     (log/info "Starting DB component")
     (assoc component :instance {})
-    #_(assoc component :instance (couch/get-database (:name config))))
+    (assoc component :instance (couch/get-database (:name config))))
 
   (stop [component]
     (log/info "Stopping DB component")
     component)
 
   protocols/UserStorage
-
   (create-user [component user]
-    true)
+    (couch/put-document instance {:users user}))
 
   (update-user [component id first-name last-name email]
     true)

@@ -1,4 +1,4 @@
-(ns closso.db.core
+(ns closso.db.mongo
     (:require [monger.core :as mg]
               [monger.collection :as mc]
               [monger.operators :refer :all]
@@ -10,8 +10,8 @@
 
 
 (defrecord Db [instance config]
-  component/Lifecycle
 
+  component/Lifecycle
   (start [component]
     ;; Tries to get the Mongo URI from the environment variable
     ;; MONGOHQ_URL, otherwise default it to localhost
@@ -23,7 +23,6 @@
     component)
 
   protocols/UserStorage
-
   (create-user [component user]
     (mc/insert instance "users" user))
 

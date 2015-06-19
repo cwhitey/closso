@@ -10,7 +10,12 @@
    [org.clojure/clojurescript "0.0-3269"] ;[org.clojure/clojurescript "0.0-2665"]
    [com.stuartsierra/component "0.2.3"]
    [com.novemberain/monger "2.0.1"]
-   [com.ashafa/clutch "0.4.0"]
+   [org.apache.httpcomponents/httpcore "4.4.1"]
+   [org.apache.httpcomponents/httpclient "4.4.1"]
+   [org.apache.httpcomponents/httpmime "4.4.1"]
+   [com.ashafa/clutch "0.4.0" :exclusions [org.apache.httpcomponents/httpcore
+                                           org.apache.httpcomponents/httpclient
+                                           org.apache.httpcomponents/httpmime]]
    [selmer "0.8.2"]
    [hiccup "1.0.5"]
    [prone "0.8.2"]
@@ -23,7 +28,9 @@
    [ring-server "0.4.0"]
    [org.flatland/useful "0.11.3"]
    [slingshot "0.12.2"]
-   [peridot "0.4.0"]
+   [peridot "0.4.0" :exclusions [org.apache.httpcomponents/httpcore
+                                           org.apache.httpcomponents/httpclient
+                                           org.apache.httpcomponents/httpmime]]
    [cheshire "5.4.0"]
    [metosin/ring-http-response "0.6.1"]
    [prismatic/schema "0.4.2"]
@@ -49,8 +56,9 @@
                                  [ring/ring-devel "1.3.2"]
                                  [expectations    "2.1.1"]
                                  [figwheel        "0.3.3"]
+                                 [lein-ancient    "0.6.2"]
                                  [com.cemerick/clojurescript.test "0.3.3"]]
-                :plugins        [[lein-figwheel          "0.3.3"]
+                :plugins        [[lein-figwheel          "0.3.3" :exclusions [org.clojure/clojure]]
                                  [lein-expectations      "0.0.7"]
                                  [lein-autoexpect        "1.4.3"]
                                  [com.cemerick/clojurescript.test "0.3.3"]
