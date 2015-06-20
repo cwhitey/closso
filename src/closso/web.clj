@@ -1,14 +1,11 @@
 (ns closso.web
   (:import org.eclipse.jetty.server.Server)
-  (:require [compojure.core :refer [defroutes routes]]
+  (:require [compojure.core :refer [defroutes]]
             [closso.routes.home :refer [home-routes]]
             [closso.middleware :refer [load-middleware]]
             [closso.session-manager :as session-manager]
             [closso.routes.auth :refer [auth-routes]]
             [closso.logging :as log-init]
-            [closso.layout :as layout]
-            [closso.templates.base :as base]
-            [closso.templates.notfound :as nf]
             [com.stuartsierra.component :as component]
             [noir.response :refer [redirect]]
             [noir.util.middleware :refer [app-handler]]
@@ -20,12 +17,10 @@
             [environ.core :refer [env]]
             [cronj.core :as cronj]))
 
-;;TODO Clean up dependencies
-
+;; TODO Clean up dependencies
 (defroutes base-routes
   (route/resources "/")
-  (route/not-found (layout/render base/base {:title "Not Found"
-                                             :body  (nf/notfound)})))
+  (route/not-found "<p>Not Found</p>"))
 
 (defn init
   "initialisation code.
@@ -56,7 +51,7 @@
    (assoc-in [:security :anti-forgery] xss-protection?)))
 
 
-;TODO stop using noir (Can use latest version of Luminus for reference)
+;; TODO stop using noir (Can use latest version of Luminus for reference)
 (defn handler [db-component]
   (app-handler
    [(auth-routes db-component) home-routes base-routes]
@@ -66,8 +61,8 @@
    :formats       [:json-kw :edn :transit-json]))
 
 (defrecord Web [db config]
-  component/Lifecycle
 
+  component/Lifecycle
   (start [component]
     (log/info "Starting Web component")
     (log/info "Web config:" config)
