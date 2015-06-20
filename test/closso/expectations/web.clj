@@ -13,7 +13,7 @@
   (-> (get-system)
       (start-system)))
 
-(def ^:dynamic *the-system* (test-app))
+(def the-system (test-app))
 
 ;TODO hit actual endpoints
 #_(prn (client/get "http://www.google.com" #_"http://localhost:3000/"))
@@ -31,4 +31,4 @@
                    :response)]
   (expect 404 (:status response)))
 
-(stop-system @#'*the-system*)
+(stop-system the-system)

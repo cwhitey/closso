@@ -7,9 +7,10 @@
 
   :dependencies
   [[org.clojure/clojure "1.7.0-RC1"]
-   [org.clojure/clojurescript "0.0-3269"] ;[org.clojure/clojurescript "0.0-2665"]
+   [org.clojure/clojurescript "0.0-3269"]
    [com.stuartsierra/component "0.2.3"]
    [com.novemberain/monger "2.0.1"]
+   ;;to fix out of date dependency of clj-http in Clutch
    [org.apache.httpcomponents/httpcore "4.4.1"]
    [org.apache.httpcomponents/httpclient "4.4.1"]
    [org.apache.httpcomponents/httpmime "4.4.1"]
@@ -28,14 +29,9 @@
    [ring-server "0.4.0"]
    [org.flatland/useful "0.11.3"]
    [slingshot "0.12.2"]
-   [peridot "0.4.0" :exclusions [org.apache.httpcomponents/httpcore
-                                           org.apache.httpcomponents/httpclient
-                                           org.apache.httpcomponents/httpmime]]
    [cheshire "5.4.0"]
    [metosin/ring-http-response "0.6.1"]
    [prismatic/schema "0.4.2"]
-   #_[clj-http        "1.1.2"]
-
 
    ;;cljs
    [secretary "1.2.3"]
@@ -57,7 +53,10 @@
                                  [expectations    "2.1.1"]
                                  [figwheel        "0.3.3"]
                                  [lein-ancient    "0.6.2"]
-                                 [com.cemerick/clojurescript.test "0.3.3"]]
+                                 [com.cemerick/clojurescript.test "0.3.3"]
+                                 [peridot "0.4.0" :exclusions [org.apache.httpcomponents/httpcore
+                                                               org.apache.httpcomponents/httpclient
+                                                               org.apache.httpcomponents/httpmime]]]
                 :plugins        [[lein-figwheel          "0.3.3" :exclusions [org.clojure/clojure]]
                                  [lein-expectations      "0.0.7"]
                                  [lein-autoexpect        "1.4.3"]
