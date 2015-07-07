@@ -132,4 +132,4 @@
   :uberjar-name "closso.jar"
   :min-lein-version "2.5.0"
   :test-paths ["test"]
-  :jvm-opts ["-server"])
+  :jvm-opts ["-server" "-XX:MaxPermSize=128m" "-XX:+UseConcMarkSweepGC" "-XX:+CMSClassUnloadingEnabled"])
