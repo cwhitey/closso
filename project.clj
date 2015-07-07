@@ -6,7 +6,7 @@
   :url "http://localhost:3000/"
 
   :dependencies
-  [[org.clojure/clojure "1.7.0-RC1"]
+  [[org.clojure/clojure "1.7.0"]
    [org.clojure/clojurescript "0.0-3269"]
    [com.stuartsierra/component "0.2.3"]
    [com.novemberain/monger "2.0.1"]
